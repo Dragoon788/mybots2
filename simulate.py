@@ -9,8 +9,10 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
 p.setGravity(0,0,-9.8)
 planeId = p.loadURDF("plane.urdf")
+robotId = p.loadURDF("body.urdf")
 
-p.loadSDF("boxes.sdf")
+
+p.loadSDF("world.sdf")
 
 for x in range(0,10000000):
 	p.stepSimulation()
