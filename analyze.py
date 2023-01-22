@@ -2,11 +2,14 @@
 import matplotlib.pyplot
 import numpy
 
-backLegSensorValues = numpy.load('data/backLegSensorValues.npy')
-frontLegSensorValues = numpy.load('data/frontLegSensorValues.npy')
+#backLegSensorValues = numpy.load('data/backLegSensorValues.npy')
+#frontLegSensorValues = numpy.load('data/frontLegSensorValues.npy')
+BackLegmotor = numpy.load('data/Torso_BackLegmotor.npy')
+#BackLegsensor = numpy.load('data/BackLegsensor.npy')
 #print (backLegSensorValues)
 
-matplotlib.pyplot.plot(backLegSensorValues, label =  'Back Leg')
-matplotlib.pyplot.plot(frontLegSensorValues, label = 'Front Leg')
+matplotlib.pyplot.plot(BackLegmotor, label =  'Back Leg')
+#matplotlib.pyplot.plot(BackLegsensor, label = 'Back Leg sens')
+#matplotlib.pyplot.plot(frontLegSensorValues, label = 'Front Leg')
 matplotlib.pyplot.legend()
 matplotlib.pyplot.show()

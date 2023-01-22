@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+
+import pybullet as p
+import pybullet_data
+import time
+import pyrosim.pyrosim as pyrosim
+import numpy
+import constants as c
+
+class MOTOR:
+	def __init__(self, jointName):
+		self.jointName = jointName
+		self.Prepare_To_Act()
+
+	def Set_Value (self, robot, t):
+
+		pyrosim.Set_Motor_For_Joint(
+		bodyIndex = robot.robotId,
+		jointName = self.jointName,
+		controlMode = p.POSITION_CONTROL,
+		targetPosition = motorCommand(,
+		maxForce = 50)
+
+	def Prepare_To_Act(self):
+		self.motors = {}
+		self.amplitude = c.backLeg_Amp
+		self.frequency = c.backLeg_Freq
+		self.offset = c.backLeg_Ofs
+		self.MotorCommand = c.MotorCommand(self.amplitude, self.frequency, self.offset, c.t)
+		for jointName in pyrosim.jointNamesToIndices:
+			self.motors[jointName] = MOTOR(jointName)
