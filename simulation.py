@@ -17,11 +17,13 @@ class SIMULATION:
 		self.world = WORLD()
 		self.robot = ROBOT()
 		self.robot.Prepare_To_Sense()
+		self.robot.Prepare_To_Act()
 	def Run(self):
 		for i in range(0,c.t):
 			time.sleep(1/100)
 			p.stepSimulation()
-			self.robot.Sense(c.t)
+			self.robot.Sense(i)
+			self.robot.Act(i)
 #		       backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
 #		       frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
 #		#      print(frontLegSensorValues)
@@ -42,5 +44,3 @@ class SIMULATION:
 #
 	def __del__(self):
 		p.disconnect()
-
-
