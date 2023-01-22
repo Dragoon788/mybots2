@@ -17,6 +17,8 @@ class MOTOR:
 		return (numpy.sin(targetAngles))*amplitude
 
 	def Set_Value (self, robot, desiredAngle):
+#		desiredAngle2 = 0*desiredAngle+desiredAngle
+#		print(desiredAngle2)
 		pyrosim.Set_Motor_For_Joint(
 		bodyIndex = robot.robotId,
 		jointName = self.jointName,
