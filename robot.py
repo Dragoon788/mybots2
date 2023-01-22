@@ -32,16 +32,8 @@ class ROBOT:
 
 	def Prepare_To_Act(self):
 		self.motors = {}
-#		self.amplitude = c.backLeg_Amp
-#		self.frequency = c.backLeg_Freq
-#		self.offset = c.backLeg_Ofs
-
-#		self.MotorCommand = c.MotorCommand(self.amplitude, self.frequency, self.offset, c.t)
-
 		for jointName in pyrosim.jointNamesToIndices:
 			self.motors[jointName] = MOTOR(jointName)
-#			self.motors[jointName].Prepare_To_Act()
-
 
 	def Act(self,t):
 		for neuronName in self.nn.Get_Neuron_Names():
@@ -50,11 +42,8 @@ class ROBOT:
 				desiredAngle = self.nn.Get_Value_Of(neuronName)
 				for i in self.motors:
 					self.motors[i].Set_Value(self, desiredAngle)
-					
+
 				print(neuronName, jointName, desiredAngle)
-#		for i in self.motors:
-#			self.motors[i].Set_Value(self, t)
-#			self.motors[i].Save_Values()
 
 	def Think(self):
 		self.nn.Update()
