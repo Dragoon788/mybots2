@@ -12,6 +12,11 @@ class SOLUTION:
 		self.Create_Brain()
 		os.system('python3 simulate.py')
 
+		f = open("data/fitness.py", "r")
+		num = f.readline()
+		self.fitness = float(num)
+		f.close
+
 	def Create_World(self):
 		length = 1
 		width = 1

@@ -24,3 +24,5 @@ frontLegMotorCommand = (numpy.sin(frontLeg_targetAngles))*frontLeg_Amp
 def MotorCommand(amplitude, frequency, offset, t):
 	targetAngles = numpy.linspace(0, 2*numpy.pi*frequency + offset,t)
 	return (numpy.sin(targetAngles))*amplitude
+
+numberOfGenerations = 2
