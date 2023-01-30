@@ -11,7 +11,7 @@ import constants as c
 
 class SIMULATION:
 	def __init__(self):
-		self.physicsClient = p.connect(p.GUI, options="--opengl2")
+		self.physicsClient = p.connect(p.DIRECT, options="--opengl2")
 		p.setAdditionalSearchPath(pybullet_data.getDataPath())
 		p.setGravity(0,0,-9.8)
 		self.world = WORLD()

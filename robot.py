@@ -19,6 +19,7 @@ class ROBOT:
 		pyrosim.Prepare_To_Simulate(self.robotId)
 		self.Prepare_To_Sense()
 		self.Prepare_To_Act()
+		self.Get_Fitness()
 
 	def Prepare_To_Sense(self):
 		self.sensors = {}
@@ -34,7 +35,6 @@ class ROBOT:
 		self.motors = {}
 		for jointName in pyrosim.jointNamesToIndices:
 			self.motors[jointName] = MOTOR(jointName)
-		print(self.motors)
 
 	def Act(self):
 		for neuronName in self.nn.Get_Neuron_Names():

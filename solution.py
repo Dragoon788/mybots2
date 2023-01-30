@@ -14,9 +14,8 @@ class SOLUTION:
 		os.system("python3 simulate.py DIRECT")
 
 		f = open("data/fitness.txt", "r")
-		num = f.readline()
-		self.fitness = float(num)
-		f.close
+		self.fitness = float(f.read())
+		f.close()
 
 	def Create_World(self):
 		length = 1
