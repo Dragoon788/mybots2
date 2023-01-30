@@ -3,21 +3,14 @@ import numpy
 import pyrosim.pyrosim as pyrosim
 import os
 import random
+import time
 
 class SOLUTION:
 	def __init__(self, nextAvailableID):
 		self.weights = 2*numpy.random.rand(3,2) - 1
 		self.myID = nextAvailableID
 	def Evaluate(self, directOrGUI):
-		self.Create_World()
-		self.Create_Body()
-		self.Create_Brain()
-		print(self.myID)
-		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
-
-		f = open("data/fitness.txt", "r")
-		self.fitness = float(f.read())
-		f.close()
+		pass
 
 	def Create_World(self):
 		length = 1
@@ -61,3 +54,20 @@ class SOLUTION:
 
 	def Mutate(self):
 		self.weights[random.randint(0,2)][random.randint(0,1)] = random.random()*2-1
+
+	def Start_Simulation(self, directOrGUI):
+		self.Create_World()
+		self.Create_Body()
+		self.Create_Brain()
+		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
+
+	def Wait_For_Simulation_To_End(self):
+		f = open("data/fitness" + str(self.myID) + ".txt", "r")
+#		while not os.path.exists("fitness" + str(self.myID) + ".txt"):
+#			time.sleep(0.01)
+		self.fitness = float(f.read())
+		print(self.fitness)
+
+		f.close()
+		print("THIS IS MY SELF.ID:" + str(self.myID))
+		os.system("rm data/fitness" + str(self.myID) + ".txt")
