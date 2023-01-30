@@ -2,7 +2,7 @@
 
 import numpy
 
-t = 300
+t = 500
 
 backLeg_Amp =  1
 backLeg_Freq = 20
@@ -26,3 +26,4 @@ def MotorCommand(amplitude, frequency, offset, t):
 	return (numpy.sin(targetAngles))*amplitude
 
 numberOfGenerations = 30
+populationSize = 2
