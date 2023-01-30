@@ -7,7 +7,6 @@ import copy
 class HILL_CLIMBER:
 	def __init__(self):
 		self.parent = SOLUTION()
-		self.Evolve()
 
 	def Evolve(self):
 		self.parent.Evaluate()
@@ -19,6 +18,7 @@ class HILL_CLIMBER:
 		self.Mutate()
 		self.child.Evaluate()
 		self.Select()
+		self.Print()
 
 	def Spawn(self):
 		self.child = copy.deepcopy(self.parent)
@@ -29,4 +29,9 @@ class HILL_CLIMBER:
 	def Evaluate(self):
 		pass
 	def Select(self):
-		pass
+		if (self.parent.fitness > self.child.fitness):
+			self.parent = self.child
+		else:
+			print("PARENT IS BETTER")
+	def Print(self):
+		print(self.parent.fitness, self.child.fitness)

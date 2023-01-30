@@ -11,7 +11,7 @@ class SOLUTION:
 		self.Create_World()
 		self.Create_Body()
 		self.Create_Brain()
-		os.system('python3 simulate.py')
+		os.system("python3 simulate.py DIRECT")
 
 		f = open("data/fitness.txt", "r")
 		num = f.readline()
