@@ -10,8 +10,14 @@ import time
 import constants as c
 
 class SIMULATION:
-	def __init__(self):
-		self.physicsClient = p.connect(p.DIRECT, options="--opengl2")
+	def __init__(self, directOrGUI):
+		if(directOrGUI == "GUI"):
+			self.physicsClient = p.connect(p.GUI, options = "--opengl2")
+		elif(directOrGUI == "DIRECT"):
+			self.physicsClient = p.connect(p.DIRECT)
+		else:
+			return TypeError("Not either GUI or DIRECT")
+#		self.physicsClient = p.connect(p.DIRECT, options="--opengl2")
 		p.setAdditionalSearchPath(pybullet_data.getDataPath())
 		p.setGravity(0,0,-9.8)
 		self.world = WORLD()
@@ -19,7 +25,7 @@ class SIMULATION:
 
 	def Run(self):
 		for i in range(0,c.t):
-			time.sleep(1/100)
+			time.sleep(1/400)
 			p.stepSimulation()
 			self.robot.Sense(i)
 			self.robot.Think()
