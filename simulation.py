@@ -22,10 +22,12 @@ class SIMULATION:
 		p.setGravity(0,0,-9.8)
 		self.world = WORLD()
 		self.robot = ROBOT()
+		self.directOrGUI = directOrGUI
 
 	def Run(self):
 		for i in range(0,c.t):
-			time.sleep(1/400)
+			if(self.directOrGUI == "GUI"):
+				time.sleep(1/50)
 			p.stepSimulation()
 			self.robot.Sense(i)
 			self.robot.Think()

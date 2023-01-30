@@ -2,7 +2,7 @@
 
 import numpy
 
-t = 300
+t = 500
 
 backLeg_Amp =  1
 backLeg_Freq = 20
