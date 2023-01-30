@@ -25,6 +25,7 @@ class SIMULATION:
 			self.robot.Think()
 			self.robot.Act()
 			self.robot.Get_Fitness()
+
 #		       backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
 #		       frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
 #		#      print(frontLegSensorValues)
