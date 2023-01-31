@@ -60,14 +60,21 @@ class SOLUTION:
 		self.Create_Body()
 		self.Create_Brain()
 		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
+#		os.system("ls data")
 
 	def Wait_For_Simulation_To_End(self):
-		f = open("data/fitness" + str(self.myID) + ".txt", "r")
-#		while not os.path.exists("fitness" + str(self.myID) + ".txt"):
-#			time.sleep(0.01)
-		self.fitness = float(f.read())
-		print(self.fitness)
 
+		fitnessFileName = "data/fitness" + str(self.myID) + ".txt"
+		while not (os.path.exists(fitnessFileName)):
+			time.sleep(0.01)
+		f = open(fitnessFileName, "r")
+		read_file = f.read()
+#		print("THIS IS MY READ FITNESS FILE:" + str(read_file))
+		self.fitness = float(read_file)
+#		print(self.fitness)
 		f.close()
-		print("THIS IS MY SELF.ID:" + str(self.myID))
-		os.system("rm data/fitness" + str(self.myID) + ".txt")
+#		print("THIS IS MY FITNESS FILE" + str(self.fitness))
+
+#		print("THIS IS MY SELF.ID:" + str(self.myID))
+		os.system("rm " + fitnessFileName)
+#		os.system("ls data")

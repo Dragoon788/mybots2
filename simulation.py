@@ -35,7 +35,6 @@ class SIMULATION:
 			self.robot.Sense(i)
 			self.robot.Think()
 			self.robot.Act()
-			self.robot.Get_Fitness()
 
 #		       backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
 #		       frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
@@ -57,5 +56,5 @@ class SIMULATION:
 #
 	def __del__(self):
 		p.disconnect()
-	def Get_Fitness():
+	def Get_Fitness(self):
 		self.robot.Get_Fitness()

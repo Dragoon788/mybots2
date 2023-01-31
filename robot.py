@@ -21,7 +21,6 @@ class ROBOT:
 		pyrosim.Prepare_To_Simulate(self.robotId)
 		self.Prepare_To_Sense()
 		self.Prepare_To_Act()
-		self.Get_Fitness()
 
 		os.system("rm brain" + solutionID + ".nndf")
 
@@ -35,7 +34,6 @@ class ROBOT:
 		for i in self.sensors:
 			self.sensors[i].Get_Value(t)
 			self.sensors[i].Save_Values()
-
 	def Prepare_To_Act(self):
 		self.motors = {}
 		for jointName in pyrosim.jointNamesToIndices:
@@ -57,8 +55,12 @@ class ROBOT:
 		stateOfLinkZero = p.getLinkState(self.robotId, 0)
 		positionOfLinkZero = stateOfLinkZero[0]
 		xCoordinateOfLinkZero = positionOfLinkZero[0]
-		f = open("data/tmp" + self.solutionID + ".txt", "w")
-		f.write(str(xCoordinateOfLinkZero))
-		os.rename("data/tmp" + self.solutionID + ".txt", "data/fitness" + self.solutionID + ".txt")
 
-		f.close
+#		print("THIS IS XCOORDINATEOFLINKZERO:" + str(xCoordinateOfLinkZero))
+		f = open("data/tmp" + str(self.solutionID) + ".txt", "w")
+		f.write(str(xCoordinateOfLinkZero))
+		f.close()
+
+		os.system("mv " + " data/tmp" + str(self.solutionID) + ".txt data/fitness" + self.solutionID + ".txt")
+#		os.system("ls data")
+#		print("FINISHED STORING AND SAVING FITNESS")
