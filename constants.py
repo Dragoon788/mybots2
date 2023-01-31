@@ -27,5 +27,5 @@ def MotorCommand(amplitude, frequency, offset, t):
 
 numberOfGenerations = 1
 populationSize = 1
-numSensorNeurons = 5
-numMotorNeurons = 4
+numSensorNeurons = 9
+numMotorNeurons = 8
