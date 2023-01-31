@@ -84,4 +84,3 @@ class SOLUTION:
 
 	def Set_ID(self, ID):
 		self.myID = ID
-
