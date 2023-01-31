@@ -71,7 +71,7 @@ class SOLUTION:
 		read_file = f.read()
 #		print("THIS IS MY READ FITNESS FILE:" + str(read_file))
 		self.fitness = float(read_file)
-#		print(self.fitness)
+		print(self.fitness)
 		f.close()
 #		print("THIS IS MY FITNESS FILE" + str(self.fitness))
 
