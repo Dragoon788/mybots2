@@ -53,8 +53,9 @@ class SOLUTION:
 		pyrosim.End()
 
 	def Mutate(self):
-		self.weights[random.randint(0,2)][random.randint(0,1)] = random.random()*2-1
-
+#		print(self.weights)
+		self.weights[random.randint(0,2)][random.randint(0,1)] = random.uniform(-1,1)
+#		print(self.weights)
 	def Start_Simulation(self, directOrGUI):
 		self.Create_World()
 		self.Create_Body()
@@ -81,3 +82,4 @@ class SOLUTION:
 
 	def Set_ID(self, ID):
 		self.myID = ID
+

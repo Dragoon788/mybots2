@@ -9,10 +9,10 @@ import os
 class PARALLEL_HILL_CLIMBER:
 	def __init__(self):
 		for i in range(0, c.populationSize):
-			if Path("brain" + str(i) + ".nndf").is_file():
-				os.system("rm brain" + str(i) + ".nndf")
-			if Path("data/fitness" + str(i) + ".nndf").is_file():
-				os.system("rm data/fitness" + str(i) + ".txt")
+#			if Path("brain" + str(i) + ".nndf").is_file():
+			os.system("rm brain" + str(i) + ".nndf")
+#			if Path("data/fitness" + str(i) + ".nndf").is_file():
+			os.system("rm data/fitness" + str(i) + ".txt")
 		self.parents = {}
 		self.nextAvailableID = 0
 
@@ -22,7 +22,7 @@ class PARALLEL_HILL_CLIMBER:
 
 	def Evolve(self):
 		self.Evaluate(self.parents)
-		self.parents[0].Evaluate("GUI")
+#		self.parents[0].Evaluate("DIRECT")
 		for currentGeneration in range(c.numberOfGenerations):
 			self.Evolve_For_One_Generation()
 
@@ -31,8 +31,8 @@ class PARALLEL_HILL_CLIMBER:
 		self.Spawn()
 		self.Mutate()
 		self.Evaluate(self.children)
-#		self.Select()
 		self.Print()
+		self.Select()
 
 
 	def Spawn(self):
@@ -43,6 +43,7 @@ class PARALLEL_HILL_CLIMBER:
 			self.nextAvailableID = self.nextAvailableID + 1
 	def Mutate(self):
 		for i in self.children:
+			print(self.children[i])
 			self.children[i].Mutate()
 
 	def Evaluate(self, solutions):
@@ -51,12 +52,16 @@ class PARALLEL_HILL_CLIMBER:
 		for parent in solutions.values():
 			parent.Wait_For_Simulation_To_End()
 	def Select(self):
-		if (self.parent.fitness > self.child.fitness):
-			self.parent = self.child
-		else:
-			print("PARENT IS BETTER")
+		for i in self.parents:
+			if (self.parents[i].fitness > self.children[i].fitness):
+				self.parents[i] = self.children[i]
+			elif(self.parents[i].fitness < self.children[i].fitness):
+				print("Parent is better")
+			else:
+				print("PARENT IS BETTER")
 	def Print(self):
 		for key in self.parents:
+#			print(self.parents[key].weights)
 			print("")
 			print(self.parents[key].fitness, self.children[key].fitness)
 			print("")
