@@ -9,10 +9,10 @@ import os
 class PARALLEL_HILL_CLIMBER:
 	def __init__(self):
 		for i in range(0, c.populationSize):
-#			if Path("brain" + str(i) + ".nndf").is_file():
-			os.system("rm brain" + str(i) + ".nndf")
-#			if Path("data/fitness" + str(i) + ".nndf").is_file():
-			os.system("rm data/fitness" + str(i) + ".txt")
+			if Path("brain" + str(i) + ".nndf").is_file():
+				os.system("rm brain" + str(i) + ".nndf")
+			if Path("data/fitness" + str(i) + ".nndf").is_file():
+				os.system("rm data/fitness" + str(i) + ".txt")
 		self.parents = {}
 		self.nextAvailableID = 0
 
