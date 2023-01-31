@@ -78,3 +78,6 @@ class SOLUTION:
 #		print("THIS IS MY SELF.ID:" + str(self.myID))
 		os.system("rm " + fitnessFileName)
 #		os.system("ls data")
+
+	def Set_ID(self, ID):
+		self.myID = ID 

@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from pathlib import Path
 from solution import SOLUTION
 import constants as c
 import copy
@@ -8,8 +9,10 @@ import os
 class PARALLEL_HILL_CLIMBER:
 	def __init__(self):
 		for i in range(0, c.populationSize):
-			os.system("rm brain" + str(i) + ".nndf")
-			os.system("rm data/fitness" + str(i) + ".txt")
+			if Path("brain" + str(i) + ".nndf").is_file():
+				os.system("rm brain" + str(i) + ".nndf")
+			if Path("data/fitness" + str(i) + ".nndf").is_file():
+				os.system("rm data/fitness" + str(i) + ".txt")
 		self.parents = {}
 		self.nextAvailableID = 0
 
@@ -28,19 +31,19 @@ class PARALLEL_HILL_CLIMBER:
 
 
 	def Evolve_For_One_Generation(self):
-#		self.Spawn()
+		self.Spawn()
 #		self.Mutate()
 #		self.child.Evaluate("DIRECT")
 #		self.Select()
 #		self.Print()
 
-		pass
 
 	def Spawn(self):
-		self.child = copy.deepcopy(self.parent)
-		self.child.Set_ID(self.nextAvailableID)
-		self.nextAvailableID = self.nextAvailableID + 1
-
+		self.children = {}
+		for i in self.parents:
+			self.children[i] = copy.deepcopy(self.parents[i])
+			self.children[i].Set_ID(self.nextAvailableID)
+			self.nextAvailableID = self.nextAvailableID + 1
 	def Mutate(self):
 		self.child.Mutate()
 
