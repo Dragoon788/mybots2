@@ -32,7 +32,7 @@ class PARALLEL_HILL_CLIMBER:
 
 	def Evolve_For_One_Generation(self):
 		self.Spawn()
-#		self.Mutate()
+		self.Mutate()
 #		self.child.Evaluate("DIRECT")
 #		self.Select()
 #		self.Print()
@@ -45,7 +45,8 @@ class PARALLEL_HILL_CLIMBER:
 			self.children[i].Set_ID(self.nextAvailableID)
 			self.nextAvailableID = self.nextAvailableID + 1
 	def Mutate(self):
-		self.child.Mutate()
+		for i in self.children:
+			self.children[i].Mutate()
 
 	def Evaluate(self):
 		pass
