@@ -52,13 +52,17 @@ class ROBOT:
 		self.nn.Update()
 #		self.nn.Print()
 	def Get_Fitness(self):
-		stateOfLinkZero = p.getLinkState(self.robotId, 0)
-		positionOfLinkZero = stateOfLinkZero[0]
-		xCoordinateOfLinkZero = positionOfLinkZero[0]
+#		stateOfLinkZero = p.getLinkState(self.robotId, 0)
+#		positionOfLinkZero = stateOfLinkZero[0]
+#		xCoordinateOfLinkZero = positionOfLinkZero[0]
+#
+		basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
+		basePosition = basePositionAndOrientation[0]
+		xPosition = basePosition[0]
 
 #		print("THIS IS XCOORDINATEOFLINKZERO:" + str(xCoordinateOfLinkZero))
 		f = open("data/tmp" + str(self.solutionID) + ".txt", "w")
-		f.write(str(xCoordinateOfLinkZero))
+		f.write(str(xPosition))
 		f.close()
 
 		os.system("mv " + " data/tmp" + str(self.solutionID) + ".txt data/fitness" + self.solutionID + ".txt")

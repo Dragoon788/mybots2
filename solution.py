@@ -8,7 +8,7 @@ import constants as c
 
 class SOLUTION:
 	def __init__(self, nextAvailableID):
-		self.weights = c.numMotorNeurons*numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons) - 1
+		self.weights = c.numMotorNeurons*2*numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons) - 1
 		self.myID = nextAvailableID
 	def Evaluate(self, directOrGUI):
 		pass
