@@ -52,19 +52,30 @@ class ROBOT:
 		self.nn.Update()
 #		self.nn.Print()
 	def Get_Fitness(self):
-#		stateOfLinkZero = p.getLinkState(self.robotId, 0)
-#		positionOfLinkZero = stateOfLinkZero[0]
-#		xCoordinateOfLinkZero = positionOfLinkZero[0]
-#
 		basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
 		basePosition = basePositionAndOrientation[0]
 		xPosition = basePosition[0]
 
-#		print("THIS IS XCOORDINATEOFLINKZERO:" + str(xCoordinateOfLinkZero))
+		baseOrientation = basePositionAndOrientation[1]
+		baseEuler = p.getEulerFromQuaternion(baseOrientation)
+
+		xOrientation = baseEuler[0]
+		yOrientation = baseEuler[1]
+		zOrientation = baseEuler[2]
+
+#		orientation = xOrientation + yOrientation + zOrientation
+
+		print("THIS IS MY XPOSITION:" + str(xPosition))
 		f = open("data/tmp" + str(self.solutionID) + ".txt", "w")
 		f.write(str(xPosition))
+
+		f2 = open("data/tmp2" + str(self.solutionID)+ ".txt", "w")
+		f2.write(str(xOrientation))
+
 		f.close()
+		f2.close()
+
 
 		os.system("mv " + " data/tmp" + str(self.solutionID) + ".txt data/fitness" + self.solutionID + ".txt")
+		os.system("mv " + " data/tmp2" + str(self.solutionID) + ".txt data/fitness2-" + self.solutionID + ".txt")
 #		os.system("ls data")
-#		print("FINISHED STORING AND SAVING FITNESS")

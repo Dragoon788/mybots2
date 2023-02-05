@@ -2,7 +2,7 @@
 
 import numpy
 
-t = 300
+t = 500
 
 backLeg_Amp =  1
 backLeg_Freq = 20
@@ -27,6 +27,6 @@ def MotorCommand(amplitude, frequency, offset, t):
 
 numberOfGenerations = 10
 populationSize = 1
-numSensorNeurons = 5
-numMotorNeurons = 8
-motorJointRange = 0.8
+numSensorNeurons = 6
+numMotorNeurons = 4
+motorJointRange = 0.3
