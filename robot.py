@@ -65,17 +65,20 @@ class ROBOT:
 
 #		orientation = xOrientation + yOrientation + zOrientation
 
-		print("THIS IS MY XPOSITION:" + str(xPosition))
+#		print("THIS IS MY XPOSITION:" + str(xPosition))
 		f = open("data/tmp" + str(self.solutionID) + ".txt", "w")
-		f.write(str(xPosition))
+		f.write(str(xPosition) + "\n")
+		f.write(str(abs(xOrientation)) +"\n")
+		f.write(str(abs(yOrientation)) + "\n")
+		f.write(str(abs(zOrientation)) + "\n")
 
-		f2 = open("data/tmp2" + str(self.solutionID)+ ".txt", "w")
-		f2.write(str(xOrientation))
+#		f2 = open("data/tmp2" + str(self.solutionID)+ ".txt", "w")
+#		f2.write(str(xOrientation))
 
 		f.close()
-		f2.close()
+#		f2.close()
 
-
+#		os.system("ls data")
 		os.system("mv " + " data/tmp" + str(self.solutionID) + ".txt data/fitness" + self.solutionID + ".txt")
-		os.system("mv " + " data/tmp2" + str(self.solutionID) + ".txt data/fitness2-" + self.solutionID + ".txt")
+#		os.system("mv " + " data/tmp2" + str(self.solutionID) + ".txt data/fitness2-" + self.solutionID + ".txt")
 #		os.system("ls data")

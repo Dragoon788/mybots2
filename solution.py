@@ -11,7 +11,7 @@ class SOLUTION:
 		self.weights = c.numMotorNeurons*numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons) - 1
 		self.myID = nextAvailableID
 	def Evaluate(self, directOrGUI):
-		pass
+		self.Start_Simulation(directOrGUI)
 
 	def Create_World(self):
 		length = 1
@@ -100,14 +100,12 @@ class SOLUTION:
 		while not (os.path.exists(fitnessFileName)):
 			time.sleep(0.01)
 		f = open(fitnessFileName, "r")
-		read_file = f.read()
+		lines = f.readlines()
 
-#		f2 = open(fitnessFileName2, "r")
-#		read_file2 = f2.read()
-
-		print("THIS IS MY READ FITNESS FILE:" + str(read_file))
-		self.fitness = float(read_file)
-#		self.fitness2 = float(read_file2)
+		self.movement_fitness = float(lines[0])
+		self.xOrientation_fitness = float(lines[1])
+#		self.yOrientation_fitness = float(lines[2])
+#		self.zOrientation_fitness = float(lines[3])
 #		print(self.fitn)
 #		f2.close()
 #		print("THIS IS MY FITNESS FILE" + str(self.fitness))

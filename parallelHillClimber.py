@@ -12,11 +12,9 @@ class PARALLEL_HILL_CLIMBER:
 		path2 = os.listdir("/home/francisvelasco2025/mybots2-git/data")
 		for item in path1:
 			if item.endswith(".nndf"):
-#				os.remove(os.path.join(path1, item)
 				os.system("rm " + item)
 		for item in path2:
 			if item.endswith(".txt"):
-#				os.remove(os.path.join(path2, item)
 				os.system("rm data/" + item)
 		self.parents = {}
 		self.nextAvailableID = 0
@@ -26,7 +24,9 @@ class PARALLEL_HILL_CLIMBER:
 			self.nextAvailableID = self.nextAvailableID + 1
 
 	def Evolve(self):
-		self.Evaluate(self.parents)
+		self.parents[0].Evaluate("GUI")
+		self.parents[0].Wait_For_Simulation_To_End()
+
 #		self.parents[0].Evaluate("DIRECT")
 		for currentGeneration in range(c.numberOfGenerations):
 			self.Evolve_For_One_Generation()
@@ -37,7 +37,7 @@ class PARALLEL_HILL_CLIMBER:
 		self.Spawn()
 		self.Mutate()
 		self.Evaluate(self.children)
-		self.Print()
+#		self.Print()
 		self.Select()
 
 
@@ -59,24 +59,35 @@ class PARALLEL_HILL_CLIMBER:
 			parent.Wait_For_Simulation_To_End()
 	def Select(self):
 		for i in self.parents:
-			if (self.parents[i].fitness > self.children[i].fitness):
+			if (self.parents[i].movement_fitness > self.children[i].movement_fitness or
+			    self.parents[i].xOrientation_fitness < self.children[i].xOrientation_fitness):
 				self.parents[i] = self.children[i]
-			elif(self.parents[i].fitness < self.children[i].fitness):
+			elif(self.parents[i].movement_fitness < self.children[i].movement_fitness):
 				print("Parent is better")
 			else:
 				print("PARENT IS BETTER")
 	def Print(self):
 		for key in self.parents:
 #			print(self.parents[key].weights)
+			print("\nMovement Fitness")
+			print(self.parents[key].movement_fitness, self.children[key].movement_fitness)
 			print("")
-			print(self.parents[key].fitness, self.children[key].fitness)
-			print("")
+			print("xOrientation Fitness")
+			print(self.parents[key].xOrientation_fitness, self.children[key].xOrientation_fitness)
+#			print("")
+#			print("yOrientation Fitness")
+#			print(self.parents[key].yOrientation_fitness, self.children[key].yOrientation_fitness)
+#			print("")
+#			print("zOrientation Fitness")
+#			print(self.parents[key].zOrientation_fitness, self.children[key].zOrientation_fitness)
+#			print("")
+
 	def Show_Best(self, parents):
 		winner_fitness = 100000
 		winner = None
 		for i in parents:
-			if (parents[i].fitness < winner_fitness):
-				winner_fitness = parents[i].fitness
+			if (parents[i].movement_fitness < winner_fitness):
+				winner_fitness = parents[i].movement_fitness
 				winner = parents[i]
 		return winner
 
