@@ -24,8 +24,11 @@ class PARALLEL_HILL_CLIMBER:
 			self.nextAvailableID = self.nextAvailableID + 1
 
 	def Evolve(self):
-		self.parents[0].Evaluate("GUI")
-		self.parents[0].Wait_For_Simulation_To_End()
+		# self.parents[1].Evaluate("GUI")
+		# self.parents[1].Wait_For_Simulation_To_End()
+		for k in self.parents:
+			self.parents[k].Evaluate("DIRECT")
+			self.parents[k].Wait_For_Simulation_To_End()
 		i = 0
 #		self.parents[0].Evaluate("DIRECT")
 		for currentGeneration in range(c.numberOfGenerations):
@@ -40,7 +43,8 @@ class PARALLEL_HILL_CLIMBER:
 		self.Spawn()
 		self.Mutate()
 		self.Evaluate(self.children)
-		# self.Print()
+		self.Print()
+		
 		self.Select()
 
 

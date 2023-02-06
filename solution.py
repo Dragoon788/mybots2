@@ -108,6 +108,7 @@ class SOLUTION:
 		self.xOrientation_fitness = float(lines[1])
 		self.yOrientation_fitness = float(lines[2])
 		self.zOrientation_fitness = float(lines[3])
+		f.close()
 #		print(self.fitn)
 #		f2.close()
 #		print("THIS IS MY FITNESS FILE" + str(self.fitness))
