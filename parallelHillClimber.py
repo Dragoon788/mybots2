@@ -43,7 +43,7 @@ class PARALLEL_HILL_CLIMBER:
 		self.Spawn()
 		self.Mutate()
 		self.Evaluate(self.children)
-		self.Print()
+		# self.Print()
 		
 		self.Select()
 
@@ -70,13 +70,14 @@ class PARALLEL_HILL_CLIMBER:
 			# if (self.parents[i].xOrientation_fitness > self.children[i].xOrientation_fitness and
 			#     self.parents[i].yOrientation_fitness > self.children[i].yOrientation_fitness and
 			# 	self.parents[i].zOrientation_fitness > self.children[i].zOrientation_fitness):
-			if (self.parents[i].xOrientation_fitness+ self.parents[i].yOrientation_fitness + self.parents[i].zOrientation_fitness >
-				self.children[i].xOrientation_fitness + self.children[i].yOrientation_fitness + self.children[i].zOrientation_fitness):
+			if (self.parents[i].movement_fitness > self.children[i].movement_fitness and 
+				(self.parents[i].xOrientation_fitness+ self.parents[i].yOrientation_fitness + self.parents[i].zOrientation_fitness >
+				self.children[i].xOrientation_fitness + self.children[i].yOrientation_fitness + self.children[i].zOrientation_fitness)):
 				self.parents[i] = self.children[i]
-			elif(self.parents[i].movement_fitness < self.children[i].movement_fitness):
-				print("Parent is better")
-			else:
-				print("PARENT IS BETTER")
+			# elif(self.parents[i].movement_fitness < self.children[i].movement_fitness):
+			# 	print("Parent is better")
+			# else:
+			# 	print("PARENT IS BETTER")
 	def Print(self):
 		for key in self.parents:
 #			print(self.parents[key].weights)
