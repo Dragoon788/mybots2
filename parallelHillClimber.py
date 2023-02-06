@@ -24,8 +24,8 @@ class PARALLEL_HILL_CLIMBER:
 			self.nextAvailableID = self.nextAvailableID + 1
 
 	def Evolve(self):
-		# self.parents[1].Evaluate("GUI")
-		# self.parents[1].Wait_For_Simulation_To_End()
+		self.parents[0].Evaluate("GUI")
+		self.parents[0].Wait_For_Simulation_To_End()
 		for k in self.parents:
 			self.parents[k].Evaluate("DIRECT")
 			self.parents[k].Wait_For_Simulation_To_End()
@@ -66,10 +66,12 @@ class PARALLEL_HILL_CLIMBER:
 			parent.Wait_For_Simulation_To_End()
 	def Select(self):
 		for i in self.parents:
-			if (self.parents[i].movement_fitness > self.children[i].movement_fitness and
-				self.parents[i].xOrientation_fitness > self.children[i].xOrientation_fitness and
-			    self.parents[i].yOrientation_fitness > self.children[i].yOrientation_fitness and
-				self.parents[i].zOrientation_fitness > self.children[i].zOrientation_fitness):
+			# if (self.parents[i].movement_fitness > self.children[i].movement_fitness and
+			# if (self.parents[i].xOrientation_fitness > self.children[i].xOrientation_fitness and
+			#     self.parents[i].yOrientation_fitness > self.children[i].yOrientation_fitness and
+			# 	self.parents[i].zOrientation_fitness > self.children[i].zOrientation_fitness):
+			if (self.parents[i].xOrientation_fitness+ self.parents[i].yOrientation_fitness + self.parents[i].zOrientation_fitness >
+				self.children[i].xOrientation_fitness + self.children[i].yOrientation_fitness + self.children[i].zOrientation_fitness):
 				self.parents[i] = self.children[i]
 			elif(self.parents[i].movement_fitness < self.children[i].movement_fitness):
 				print("Parent is better")
@@ -78,25 +80,29 @@ class PARALLEL_HILL_CLIMBER:
 	def Print(self):
 		for key in self.parents:
 #			print(self.parents[key].weights)
-			print("\nMovement Fitness")
-			print(self.parents[key].movement_fitness, self.children[key].movement_fitness)
-			print("")
-			# print("xOrientation Fitness")
-			# print(self.parents[key].xOrientation_fitness, self.children[key].xOrientation_fitness)
-#			print("")
-			print("yOrientation Fitness")
-			print(self.parents[key].yOrientation_fitness, self.children[key].yOrientation_fitness)
-			print("")
-			# print("zOrientation Fitness")
-			# print(self.parents[key].zOrientation_fitness, self.children[key].zOrientation_fitness)
+			# print("\nMovement Fitness")
+			# print(self.parents[key].movement_fitness, self.children[key].movement_fitness)
 			# print("")
+			print("xOrientation Fitness")
+			print(self.parents[key].xOrientation_fitness, self.children[key].xOrientation_fitness)
+			print("")
+			# print("yOrientation Fitness")
+			# print(self.parents[key].yOrientation_fitness, self.children[key].yOrientation_fitness)
+			# print("")
+			print("zOrientation Fitness")
+			print(self.parents[key].zOrientation_fitness, self.children[key].zOrientation_fitness)
+			print("")
 
 	def Show_Best(self, parents):
-		winner_fitness = 100000
-		winner = None
+
+		winner = self.parents[0]
 		for i in parents:
-			if (parents[i].movement_fitness < winner_fitness):
-				winner_fitness = parents[i].movement_fitness
+			if (##self.parents[i].movement_fitness > winner.movement_fitness and
+				# self.parents[i].xOrientation_fitness > winner.xOrientation_fitness and
+			    # self.parents[i].yOrientation_fitness > winner.yOrientation_fitness and
+				# self.parents[i].zOrientation_fitness > winner.zOrientation_fitness):
+				self.parents[i].xOrientation_fitness+ self.parents[i].yOrientation_fitness + self.parents[i].zOrientation_fitness <
+				winner.xOrientation_fitness + winner.yOrientation_fitness + winner.zOrientation_fitness):
 				winner = parents[i]
 		return winner
 
