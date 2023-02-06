@@ -26,7 +26,9 @@ def MotorCommand(amplitude, frequency, offset, t):
 	return (numpy.sin(targetAngles))*amplitude
 
 numberOfGenerations = 100
-populationSize = 1
+populationSize = 20
 numSensorNeurons = 6
 numMotorNeurons = 4
-motorJointRange = 0.5
+motorJointRange = 1
+
+function_finished = False

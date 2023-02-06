@@ -8,8 +8,10 @@ import constants as c
 
 class SOLUTION:
 	def __init__(self, nextAvailableID):
-		self.weights = c.numMotorNeurons*numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons) - 1
+		self.weights = 2*numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons) - 1
 		self.myID = nextAvailableID
+		# self.movement_fitness = None
+		# self.xOrientation_fitness = None
 	def Evaluate(self, directOrGUI):
 		self.Start_Simulation(directOrGUI)
 
@@ -104,8 +106,9 @@ class SOLUTION:
 
 		self.movement_fitness = float(lines[0])
 		self.xOrientation_fitness = float(lines[1])
-#		self.yOrientation_fitness = float(lines[2])
-#		self.zOrientation_fitness = float(lines[3])
+		self.yOrientation_fitness = float(lines[2])
+		self.zOrientation_fitness = float(lines[3])
+		f.close()
 #		print(self.fitn)
 #		f2.close()
 #		print("THIS IS MY FITNESS FILE" + str(self.fitness))

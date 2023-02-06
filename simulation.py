@@ -16,7 +16,7 @@ class SIMULATION:
 		self.solutionID = solutionID
 
 		if(directOrGUI == "GUI"):
-			self.physicsClient = p.connect(p.GUI, options = "--opengl2")
+			self.physicsClient = p.connect(p.GUI)
 		elif(directOrGUI == "DIRECT"):
 			self.physicsClient = p.connect(p.DIRECT)
 		else:
