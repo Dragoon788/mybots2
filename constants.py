@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import numpy
+import random
 
 t = 500
 
@@ -25,10 +26,16 @@ def MotorCommand(amplitude, frequency, offset, t):
 	targetAngles = numpy.linspace(0, 2*numpy.pi*frequency + offset,t)
 	return (numpy.sin(targetAngles))*amplitude
 
-numberOfGenerations = 200
-populationSize = 20
-numSensorNeurons = 6
-numMotorNeurons = 4
+maxForce = 100
+numberOfGenerations = 1
+populationSize = 1
 motorJointRange = 1
+bodylen = random.randint(0,20)
+random_sensor_locs = [random.randint(0,bodylen-1) for i in range(0,5)]
 
-function_finished = False
+linkNames = []
+jointNames =[]
+
+numSensorNeurons = len(random_sensor_locs)
+numMotorNeurons = bodylen
+
