@@ -8,7 +8,7 @@ the direction of the first link and the second link, we would have to mathmatica
 where the joint should be placed.
 
 The diagram here explains that process:
-
+https://imgur.com/a/7FSJdgd
 
 The Brain was created simply by looping through all my stored joints in an array and 
 adding motors to each joint. For the sensors and synapses, I had a random list of x,y,z locations.
