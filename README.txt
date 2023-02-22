@@ -1,21 +1,16 @@
-For this homework assignment, I edited most of my files in solution.py and constants.py.
-In order to get the body of the worm. I created a for-loop that loops through an random
-body length, and checks 3 key values for determining how joints are put in.
+For this assignment, I designed a creature that randomly grew in 3D space by creating a function 
+within links.py which would create a list of Links that were built off the of the previous link.
+A random direction would be chosen in the link's constructor and therefore be built in a random direction.
+Then I would loop through and make a joint connecting each of those links.
 
-1. If we are the beginning (and therefore need to put Links and joints at absolute positions)
-2. If we are at the first value (therefore only need to put one Links)
-3. Else; where the rest of the body is generated based off the previous joint and is
-therefore predictable
+The connection of the joints was the difficult part of the this assignment. Based on what
+the direction of the first link and the second link, we would have to mathmatically determine
+where the joint should be placed.
 
-To help aid in the Create_Brain() section, I also initialized a list that would put all
-the links and joint names in a list.
+The diagram here explains that process:
 
-For Create_Brain(), I looped through my joint and link lists, to add synapses for the lists
-of sensors that were being added and joints as well.
 
-For determinig where to place the sensors. I created a list that would randomly
-generate five values within our body length that would be having the sensors.
-In Create_Brain(), I simply looped through this list and put the sensors there.
+The Brain was created simply by looping through all my stored joints in an array and 
+adding motors to each joint. For the sensors and synapses, I had a random list of x,y,z locations.
+If my block was in any of those indexes, it would turn green and a synapse would be added.
 
-To obtain a random body length, I simply set my variable for body length to be 
-random.randint(0,20)

@@ -5,13 +5,13 @@ import os
 import random
 import time
 import constants as c
+import links as l
 
 class SOLUTION:
 	def __init__(self, nextAvailableID):
 		self.weights = 2*numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons) - 1
 		self.myID = nextAvailableID
-		# self.movement_fitness = None
-		# self.xOrientation_fitness = None
+
 	def Evaluate(self, directOrGUI):
 		self.Start_Simulation(directOrGUI)
 
@@ -25,72 +25,42 @@ class SOLUTION:
 		pyrosim.End()
 
 	def Create_Body(self):
-		length = 1
-		width = 1
-		height = 1
 
-		random_sizes = [[random.random() for i in range(0,3)] for i in range(0,c.bodylen)]
-		max_height = max(l[2] for l in random_sizes)
-
-		print(c.random_sensor_locs)
+		# print(c.random_sensor_locs)
 
 
 		pyrosim.Start_URDF("body.urdf")
-		for i in range (0, c.bodylen):
-			if (i == 0):
-				lN = "Link"+str(i)
-				c.linkNames.append(lN)
-				jN = lN +"_"+"Link"+str(i+1)
-				c.jointNames.append(jN)
+		#Having the robot grow in it's own direction
+		l.Create_Snakey()
 
-				pyrosim.Send_Joint(jN, lN, "Link"+str(i+1), type = "revolute", position = [0,random_sizes[i][1]/2,max_height], jointAxis = "0 0 1")
+		print(c.linkNames)
+		print(c.jointNames)
 
-				if(i in c.random_sensor_locs):
-					pyrosim.Send_Cube(lN, pos=[0,0,max_height], size=random_sizes[i], color_name='<material name="Green">', color_code='		<color rgba="0 128 0 1.0"/>')
-				else:
-					pyrosim.Send_Cube(lN, pos=[0,0,max_height], size=random_sizes[i], color_name='<material name="Cyan">', color_code='		<color rgba="0 191 255 1.0"/>')
-			
-			elif(i == 1):
-				lN = "Link"+str(i)
-				c.linkNames.append(lN)
-				if(i in c.random_sensor_locs):
-					pyrosim.Send_Cube(lN, pos=[0,random_sizes[i][1]/2,0], size=random_sizes[i], color_name='<material name="Green">', color_code='		<color rgba="0 128 0 1.0"/>')
-				else:
-					pyrosim.Send_Cube(lN, pos=[0,random_sizes[i][1]/2,0], size=random_sizes[i], color_name='<material name="Cyan">', color_code='		<color rgba="0 191 255 1.0"/>')
-		
-			else:
-				prevlN = "Link"+str(i-1)
-				lN = "Link"+str(i)
-				c.linkNames.append(lN)
-				jN = prevlN+"_"+lN
-				c.jointNames.append(jN)
-
-				pyrosim.Send_Joint(jN, prevlN, lN, type = "revolute", position=[0,random_sizes[i-1][1], 0], jointAxis = "0 0 1")
-				if(i in c.random_sensor_locs):
-					pyrosim.Send_Cube(lN, pos=[0,random_sizes[i][1]/2,0], size=random_sizes[i], color_name='<material name="Green">', color_code='		<color rgba="0 128 0 1.0"/>')
-				else:
-					pyrosim.Send_Cube(lN, pos=[0,random_sizes[i][1]/2,0], size=random_sizes[i], color_name='<material name="Cyan">', color_code='		<color rgba="0 191 255 1.0"/>')
+				
 		pyrosim.End()
 
 	def Create_Brain(self):
 		pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
 		n = 0
-		
-		for i in c.random_sensor_locs:
-			# print(i)
-			pyrosim.Send_Sensor_Neuron(name = n, linkName = c.linkNames[i])
-			n = n+1
+		j=0
+		for list in c.random_sensor_locs:
+			for i in list:
+				if (i < len(c.linkNames)):
+					pyrosim.Send_Sensor_Neuron(name = n, linkName = c.linkNames[i])
+					n = n+1
+			j = j +1
 
+		c.numSensorNeurons = n
 		for i in c.jointNames:
 			pyrosim.Send_Motor_Neuron(name = n, jointName = i)
 			n= n+1
-
+		print(f"this is my n: {n}")
+		print(c.numSensorNeurons)
+		print(c.numMotorNeurons)
 		for currentRow in range (0,c.numSensorNeurons):
 			for currentColumn in range (0,c.numMotorNeurons):
 				pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn+c.numSensorNeurons, weight = self.weights[currentRow][currentColumn])
 		pyrosim.End()
-
-
 
 	def Mutate(self):
 #		print(self.weights)
