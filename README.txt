@@ -5,12 +5,12 @@ Then I would loop through and make a joint connecting each of those links.
 
 The connection of the joints was the difficult part of the this assignment. Based on what
 the direction of the first link and the second link, we would have to mathmatically determine
-where the joint should be placed.
+where the joint should be placed based on the size of our random block.
 
 The diagram here explains that process:
 https://imgur.com/a/7FSJdgd
 
-The Brain was created simply by looping through all my stored joints in an array and 
+The Brain was created simply by looping through all my stored joints in an array (done when each joint was initiallized) and 
 adding motors to each joint. For the sensors and synapses, I had a random list of x,y,z locations.
 If my block was in any of those indexes, it would turn green and a synapse would be added.
 
