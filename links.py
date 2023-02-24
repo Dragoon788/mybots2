@@ -9,25 +9,18 @@ import links as l
 class LINK:
     def __init__ (self, variable, index):
         self.var = variable
-        self.i = index
+        self.i = c.gindex
+        self.tracker = {"x": 0, "y": 0, "z":0}
+        c.gindex = c.gindex + 1
     def make_lN_str (self):
         return "Link-" + self.var + str(self.i)
-    def i_after_str(self, string):
-        if ('x' in string):
-            i = int(string.split('x')[1])
-        if ('y' in string):
-            i = int(string.split('y')[1])
-        if ('z' in string):
-            i = int(string.split('z')[1])
-
-        return i + 1
 
     def Send_Link(self):
         if (self.i == 0):
             posi = [0,0,c.max_height]
-            lN = "Head"      
+            lN = self.make_lN_str()     
             c.linkNames.append(lN)
-            if(self.i in c.random_sensor_locs[0]):
+            if(self.i in c.random_sensor_locs):
                 pyrosim.Send_Cube(lN, pos=posi, size=c.random_sizes_x[self.i], color_name='<material name="Green">', color_code='		<color rgba="0 128 0 1.0"/>')
             else:
                 pyrosim.Send_Cube(lN, pos=posi, size=c.random_sizes_x[self.i], color_name='<material name="Cyan">', color_code='		<color rgba="0 191 255 1.0"/>')    
@@ -47,10 +40,11 @@ class LINK:
             lN = self.make_lN_str()
             c.linkNames.append(lN)
 
-            if self.i in c.random_sensor_locs[i]:
+            if self.i in c.random_sensor_locs:
                 pyrosim.Send_Cube(lN, pos=posi, size=random_sizes[self.i], color_name='<material name="Green">', color_code='		<color rgba="0 128 0 1.0"/>')
             else:
                 pyrosim.Send_Cube(lN, pos=posi, size=random_sizes[self.i], color_name='<material name="Cyan">', color_code='		<color rgba="0 191 255 1.0"/>')
+        
 
 class JOINT:
     def __init__(self,link1, link2):
@@ -62,9 +56,9 @@ class JOINT:
         if (self.lN1 == self.lN2):
             raise ValueError("Cannot pass in the same link")
         if (self.lN1.i == 0):
-            lN = "Head"
+            lN = self.lN1.make_lN_str()
             nextlN = self.lN2.make_lN_str()
-            jN = "Head" + "_" + self.lN2.make_lN_str()
+            jN = lN + "_" + nextlN
             c.jointNames.append(jN)
             if (self.lN2.var == "x"):
                 posi = [c.random_sizes_x[self.lN1.i][0]/2, 0, c.max_height]
@@ -76,7 +70,7 @@ class JOINT:
                 posi = [0, 0, c.max_height + c.random_sizes_x[self.lN1.i][2]/2]
                 jX = "1 1 0"
             pyrosim.Send_Joint(jN, lN, nextlN, type = "revolute", position = posi, jointAxis = jX)
-        if (self.lN1.i >= 1):
+        if (self.lN1.i > 0):
             lN = self.lN1.make_lN_str()
             nextlN = self.lN2.make_lN_str()
             jN = self.make_jN_str()
@@ -121,18 +115,37 @@ class JOINT:
             #SENDING IN THE JOINTS DEPENDING ON WHERE THE CHANGES ARE
             jX_str = " ".join(jX)
             pyrosim.Send_Joint(jN, lN, nextlN, type = "revolute", position = posi, jointAxis = jX_str)
+    def Connect_Links(self):
+        if (self.lN1.tracker[self.lN2.var] == 1):
+            raise ("Cannot append to link in the same direction twice")
+        elif(self.lN2.tracker[self.lN1.var] == 1):
+            raise ("Cannot append to link in the same direction twice")
+        elif (self.lN1.make_lN_str() in c.linkNames):
+            self.Send_Joint()
+            self.lN2.Send_Link()
+            self.lN1.tracker[self.lN2.var] = 1
+        elif(self.lN2.make_lN_str() in c.linkNames):
+            self.Send_Joint()
+            self.lN1.Send_Link()
+            self.lN2.tracker[self.lN1.var] = 1
+        elif(self.lN2.make_lN_str() in c.linkNames and self.lN1.make_lN_str() in c.linkNames):
+            raise ("Cannot build from two existing links")
+        else: 
+            self.lN1.Send_Link()
+            self.Send_Joint()
+            self.lN2.Send_Link()
+
 
 def Create_Snakey():
     dir = ["x","y","z"]
     LINKS = []
     for i in range(0, c.bodylen-1):
-        LINKS.append(LINK(random.choice(dir), i))
+        LINKS.append(LINK(random.choice(dir), c.gindex))
     for i in range(len(LINKS)-1):
         link = LINKS[i]
         next_link = LINKS[i+1]			
         if (i == len(LINKS)-2):
             link.Send_Link()
-            max_i= i
         else:
             link.Send_Link()
             Joint = JOINT(link, next_link)
@@ -150,7 +163,45 @@ def Create_Snakey():
     #                 Joint = l.JOINT(link, next_link)
     #                 Joint.Send_Joint()
     # print(LINKS)
+def Build_Creature():
+    dir = ["x","y", "z"]
+    LINKS = []
+    terminal_edges = []
 
+    link = LINK("x", 5)
+    # c.linkNames.append(link.make_lN_str())
+    starting_link = link
+
+    for i in range(0, c.bodylen-1):
+        selected_input = random.choice(dir)
+    # Randomly select number of times to call Joint.connect
+        num_calls = random.randint(1, 3)
+
+        # Keep track of which inputs have been called
+        called_inputs = []
+
+        # Call Joint.connect a random number of times
+        for i in range(num_calls):
+            # If all inputs have been called, break out of loop
+            if len(called_inputs) == 3:
+                break
+            # If selected input has already been called, skip iteration
+            if selected_input in called_inputs:
+                selected_input = random.choice(list(set(dir) - set(called_inputs)))
+            link2 = LINK(selected_input, 5)
+            joint = JOINT(starting_link, link2)
+
+            # Call Joint.connect with selected input
+            joint.Connect_Links()
+
+            # Add selected input to list of called inputs
+            called_inputs.append(selected_input)
+            terminal_edges.append(link2)
+        starting_link = random.choice(terminal_edges)
+        terminal_edges.remove(starting_link)
+        print("check")
+
+    # joint4.Connect_Links()
 # def Build_Creature():
 #     dir = ["x", "y", "z"]
 #     LINKS = []
@@ -206,11 +257,9 @@ def Create_Lizardy():
     dir = ["x", "y", "z"]
     random_skel_dir = dir[random.randint(0,2)]
     LINKS =[]
-    j = 0
     def build_in_one_dir (d, list):
         for i in range(0,10):
-            list.append(l.LINK(d, i))
-            j = j+1
+            list.append(l.LINK(d, c.gindex))
         for i in range(len(list)-1):
             link = list[i]
             next_link = list[i+1]		
@@ -220,9 +269,25 @@ def Create_Lizardy():
                 link.Send_Link()
                 Joint = l.JOINT(link, next_link)
                 Joint.Send_Joint()
-
-    build_in_one_dir("y", LINKS)
-
+    build_in_one_dir(d, LINKS)
+    # for link in LINKS:
+    #     useless_list = []
+    #     print("THIS IS THE LENGHT O F RANODM:" + str(len(c.random_sizes_x)))
+    #     for i in range(0,10):
+    #         useless_list.append(l.LINK("x", c.gindex))
+    #         c.gindex = c.gindex+1
+    #     for i in range(len(useless_list)-1):
+    #         print(link)
+    #         link = useless_list[i]
+    #         useless_list[0] = link
+    #         next_link = useless_list[i+1]		
+    #         if (i == len(useless_list)-2):
+    #             link.Send_Link()
+    #         else:
+    #             print(link.i)
+    #             link.Send_Link()
+    #             Joint = l.JOINT(link, next_link)
+    #             Joint.Send_Joint()
 
     # LEGS = [random.randint(0,10) for i in range (len(LINKS))]
     # for i in LEGS:

@@ -31,8 +31,9 @@ class SOLUTION:
 
 		pyrosim.Start_URDF("body.urdf")
 		#Having the robot grow in it's own direction
-		l.Create_Snakey()
-
+		# l.Create_Snakey()
+		l.Build_Creature()
+		# l.Create_Lizardy
 		print(c.linkNames)
 		print(c.jointNames)
 
@@ -42,13 +43,11 @@ class SOLUTION:
 	def Create_Brain(self):
 		pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
 		n = 0
-		j=0
-		for list in c.random_sensor_locs:
-			for i in list:
-				if (i < len(c.linkNames)):
-					pyrosim.Send_Sensor_Neuron(name = n, linkName = c.linkNames[i])
-					n = n+1
-			j = j +1
+
+		for i in c.random_sensor_locs:
+			if (i < len(c.linkNames)):
+				pyrosim.Send_Sensor_Neuron(name = n, linkName = c.linkNames[i])
+				n = n+1
 
 		c.numSensorNeurons = n
 		for i in c.jointNames:
