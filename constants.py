@@ -26,13 +26,14 @@ def MotorCommand(amplitude, frequency, offset, t):
 	targetAngles = numpy.linspace(0, 2*numpy.pi*frequency + offset,t)
 	return (numpy.sin(targetAngles))*amplitude
 
-maxForce = 100
+maxForce = 50
 numberOfGenerations = 1
 populationSize = 1
 motorJointRange = 1
 gindex = 0
-bodylen = random.randint(1,15) 
-random_sensor_locs = [random.randint(0,(bodylen)) for i in range(random.randint(0,7))]
+bodylen = random.randint(1,10)
+curr_bodylen = 0
+random_sensor_locs = [random.randint(0,bodylen-1) for i in range(random.randint(1,bodylen))]
 
 linkNames = []
 
@@ -40,7 +41,7 @@ jointNames =[]
 
 
 numSensorNeurons = len(random_sensor_locs)
-numMotorNeurons = bodylen-2
+numMotorNeurons = bodylen
 random_dir = []
 random_sizes = [random.random for i in range (0,bodylen)]
 random_sizes_x = [[random.random() for i in range(0,10)] for i in range(0,bodylen*100)]

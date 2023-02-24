@@ -34,6 +34,7 @@ class SOLUTION:
 		# l.Create_Snakey()
 		l.Build_Creature()
 		# l.Create_Lizardy
+		print(c.random_sensor_locs)
 		print(c.linkNames)
 		print(c.jointNames)
 
@@ -44,10 +45,13 @@ class SOLUTION:
 		pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
 		n = 0
 
-		for i in c.random_sensor_locs:
-			if (i < len(c.linkNames)):
+		for i in range(c.bodylen):
+			if (c.bodylen == 0):
+				break
+			if (i in c.random_sensor_locs):
 				pyrosim.Send_Sensor_Neuron(name = n, linkName = c.linkNames[i])
 				n = n+1
+	
 
 		c.numSensorNeurons = n
 		for i in c.jointNames:
