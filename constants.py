@@ -26,30 +26,33 @@ def MotorCommand(amplitude, frequency, offset, t):
 	targetAngles = numpy.linspace(0, 2*numpy.pi*frequency + offset,t)
 	return (numpy.sin(targetAngles))*amplitude
 
-maxForce = 50
+maxForce = 100
 numberOfGenerations = 1
 populationSize = 1
-motorJointRange = 1
+motorJointRange = 0
 gindex = 0
-bodylen = random.randint(1,10)
+bodylen = random.randint(1,7)
 curr_bodylen = 0
 random_sensor_locs = [random.randint(0,bodylen-1) for i in range(random.randint(1,bodylen))]
 
 linkNames = []
+link_positions = []
 
 jointNames =[]
 
 
 numSensorNeurons = len(random_sensor_locs)
 numMotorNeurons = bodylen
-random_dir = []
-random_sizes = [random.random for i in range (0,bodylen)]
-random_sizes_x = [[random.random() for i in range(0,10)] for i in range(0,bodylen*100)]
-random_sizes_y = [[random.random() for i in range(0,10)] for i in range(0,bodylen*100)]
-random_sizes_z = [[random.random() for i in range(0,10)] for i in range(0,bodylen*100)]
+random_sizes = [[random.random() for i in range(0,3)] for i in range (0,bodylen+1)]
 
-max_height_x = max(l[2] for l in random_sizes_x)
-max_height_y = max(l[2] for l in random_sizes_y)
-max_height_z = max(l[2] for l in random_sizes_z)
+# random_sizes_x = [[random.random() for i in range(0,10)] for i in range(bodylen)]
+# random_sizes_y = [[random.random() for i in range(0,10)] for i in range(bodylen)]
+# random_sizes_z = [[random.random() for i in range(0,10)] for i in range(bodylen)]
 
-max_height = max([max_height_x, max_height_y, max_height_z])
+# max_height_x = max(l[2] for l in random_sizes_x)
+# max_height_y = max(l[2] for l in random_sizes_y)
+# max_height_z = max(l[2] for l in random_sizes_z)
+
+max_height = max(l[2] for l in random_sizes)
+abs_pos = [0,0, max_height]
+prev_pos = abs_pos

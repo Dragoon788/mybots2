@@ -34,6 +34,7 @@ class SOLUTION:
 		# l.Create_Snakey()
 		l.Build_Creature()
 		# l.Create_Lizardy
+		# l.test_first_connect()
 		print(c.random_sensor_locs)
 		print(c.linkNames)
 		print(c.jointNames)

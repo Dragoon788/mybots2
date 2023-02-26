@@ -1,4 +1,5 @@
 import numpy
+import pybullet as p
 import pyrosim.pyrosim as pyrosim
 import os
 import random
@@ -11,7 +12,18 @@ class LINK:
         self.var = variable
         self.i = c.gindex
         self.tracker = {"x": 0, "y": 0, "z":0}
+        self.abs_pos = [0,0,0]
         c.gindex = c.gindex + 1
+
+        self.xMin = c.abs_pos[0] - c.random_sizes[self.i][0]
+        self.xMax = c.abs_pos[0] + c.random_sizes[self.i][0]
+        self.yMin = c.abs_pos[1] - c.random_sizes[self.i][1]
+        self.yMax = c.abs_pos[1] + c.random_sizes[self.i][1]
+        self.zMin = c.abs_pos[2] - c.random_sizes[self.i][2]
+        self.zMax = c.abs_pos[2] + c.random_sizes[self.i][2]
+
+        
+
     def make_lN_str (self):
         return "Link-" + self.var + str(self.i)
 
@@ -21,36 +33,81 @@ class LINK:
             lN = self.make_lN_str()     
             c.linkNames.append(lN)
             if(self.i in c.random_sensor_locs):
-                pyrosim.Send_Cube(lN, pos=posi, size=c.random_sizes_x[self.i], color_name='<material name="Green">', color_code='		<color rgba="34 139 34 1.0"/>')
+                pyrosim.Send_Cube(lN, pos=posi, size=c.random_sizes[self.i], color_name='<material name="Green">', color_code='		<color rgba="0 0 100 1.0"/>')
             else:
-                pyrosim.Send_Cube(lN, pos=posi, size=c.random_sizes_x[self.i], color_name='<material name="Blue">', color_code='		<color rgba="0 0 139 1.0"/>')    
+                pyrosim.Send_Cube(lN, pos=posi, size=c.random_sizes[self.i], color_name='<material name="Blue">', color_code='		<color rgba="2 1 139 1.0"/>')    
+
+                c.link_positions.append([self.xMin, self.xMax, self.yMin, self.yMax, self.zMin, self.zMax])       
         else:
             if (self.var == "x"):
-                random_sizes = c.random_sizes_x
-                posi = [c.random_sizes_x[self.i][0]/2, 0, 0]
-                i = 0
+                random_sizes = c.random_sizes
+                posi = [c.random_sizes[self.i][0]/2, 0, 0]
+                c.abs_pos[0] = 
             elif (self.var == "y"):
-                random_sizes = c.random_sizes_y
-                posi = [0, c.random_sizes_y[self.i][1]/2, 0]
-                i = 1
+                random_sizes = c.random_sizes
+                posi = [0, c.random_sizes[self.i][1]/2, 0]
             elif (self.var == "z"):  # change this to check "z"
-                random_sizes = c.random_sizes_z
-                posi = [0, 0, c.random_sizes_z[self.i][2]/2]
-                i = 2
+                random_sizes = c.random_sizes
+                posi = [0, 0, c.random_sizes[self.i][2]/2]
             lN = self.make_lN_str()
             c.linkNames.append(lN)
 
             if self.i in c.random_sensor_locs:
-                pyrosim.Send_Cube(lN, pos=posi, size=random_sizes[self.i], color_name='<material name="Green">', color_code='		<color rgba="34 139 34 1.0"/>')
+                pyrosim.Send_Cube(lN, pos=posi, size=random_sizes[self.i], color_name='<material name="Green">', color_code='		<color rgba="0 0 100 1.0"/>')
             else:
-                pyrosim.Send_Cube(lN, pos=posi, size=random_sizes[self.i], color_name='<material name="Blue">', color_code='		<color rgba="0 0 139 1.0"/>')
-        
+                pyrosim.Send_Cube(lN, pos=posi, size=random_sizes[self.i], color_name='<material name="Blue">', color_code='		<color rgba="1 1 139 1.0"/>')
 
+            c.link_positions.append([self.xMin, self.xMax, self.yMin, self.yMax, self.zMin, self.zMax])
+        # self.check_for_int()
+
+    def check_for_int(self):
+        for pos in c.link_positions:
+            def x_check():
+                if (self.xMax > pos[0] and self.xMax < pos[1]):
+                    # dif = self.xMax - pos[0]
+                    # c.random_sizes[self.i][0] = c.random_sizes[self.i][0] - dif
+                    return True
+                elif (self.xMin > pos[0] and self.xMin < pos[1]):
+                    # dif = pos[1] - self.xMin
+                    # c.random_sizes[self.i][0] = c.random_sizes[self.i][0] - dif
+                    return True
+                else:
+                    return False
+            def y_check():
+                if (self.yMax > pos[2] and self.yMax < pos[3]):
+                    # dif = self.yMax - pos[2]
+                    # c.random_sizes[self.i][1] = c.random_sizes[self.i][1] - dif
+                    return True
+                elif (self.yMin > pos[2] and self.yMin < pos[3]):
+                    # dif = pos[3] - self.yMin 
+                    # c.random_sizes[self.i][1] = c.random_sizes[self.i][1] - dif
+                    return True
+                else:
+                    return False
+            def z_check():
+                if (self.zMax > pos[4] and self.zMax < pos[5]):
+                    # dif = self.zMax - pos[4]
+                    # c.random_sizes[self.i][2] = c.random_sizes[self.i][2] - dif
+                    return True
+                elif (self.zMin > pos[4] and self.zMin < pos[5]):
+                    # dif = pos[5] - self.zMin
+                    # c.random_sizes[self.i][2] = c.random_sizes[self.i][2] - dif
+                    return True
+                else:
+                    return False
+            while (x_check() and y_check() and z_check()):
+                c.random_sizes[self.i][0] = c.random_sizes[self.i][0]/2
+                c.random_sizes[self.i][1] = c.random_sizes[self.i][1]/2
+                c.random_sizes[self.i][2] = c.random_sizes[self.i][2]/2
+                
 class JOINT:
     def __init__(self,link1, link2):
         self.lN1 = link1
         self.lN2 = link2
+        
     def make_jN_str(self):
+        # if (self.make_jN_str() in c.jointNames):
+        #     raise ("Joint already exists")
         return self.lN1.make_lN_str() + "_" + self.lN2.make_lN_str()
     def Send_Joint(self):
         if (self.lN1 == self.lN2):
@@ -61,14 +118,14 @@ class JOINT:
             jN = lN + "_" + nextlN
             c.jointNames.append(jN)
             if (self.lN2.var == "x"):
-                posi = [c.random_sizes_x[self.lN1.i][0]/2, 0, c.max_height]
-                jX = "1 0 0"
-            if (self.lN2.var == "y"):
-                posi = [0, c.random_sizes_x[self.lN1.i][1]/2, c.max_height]
-                jX = "0 1 0"
-            if (self.lN2.var == "z"):
-                posi = [0, 0, c.max_height + c.random_sizes_x[self.lN1.i][2]/2]
+                posi = [c.random_sizes[self.lN1.i][0]/2, 0, c.max_height]
                 jX = "0 0 1"
+            if (self.lN2.var == "y"):
+                posi = [0, c.random_sizes[self.lN1.i][1]/2, c.max_height]
+                jX = "0 0 1"
+            if (self.lN2.var == "z"):
+                posi = [0, 0, c.max_height + c.random_sizes[self.lN1.i][2]/2]
+                jX = "1 0 0"
             pyrosim.Send_Joint(jN, lN, nextlN, type = "revolute", position = posi, jointAxis = jX)
         if (self.lN1.i > 0):
             lN = self.lN1.make_lN_str()
@@ -81,40 +138,37 @@ class JOINT:
             
             ##IF STATEMENTS DETERIME THE CHANGE IN X,Y,Z POSITION
             if (self.lN2.var == "x"):
-                random_sizes = c.random_sizes_x
-                posi[0] = random_sizes[self.lN1.i][0]/2
-                jX[1] = str(0)
-                jX[2] = str(0)
-            if (self.lN2.var == "y"):
-                random_sizes = c.random_sizes_y
-                posi[1] = random_sizes[self.lN1.i][1]/2 
-                jX[0] = str(0)     
-                jX[2] = str(0)          
-            if (self.lN2.var == "z"):
-                random_sizes = c.random_sizes_z
-                posi[2] = random_sizes[self.lN1.i][2]/2
+                posi[0] = c.random_sizes[self.lN1.i][0]/2
                 jX[0] = str(0)
                 jX[1] = str(0)
+            if (self.lN2.var == "y"):
+                posi[1] = c.random_sizes[self.lN1.i][1]/2 
+                jX[0] = str(0)     
+                jX[1] = str(0)          
+            if (self.lN2.var == "z"):
+                posi[2] = c.random_sizes[self.lN1.i][2]/2
+                jX[1] = str(0)
+                jX[2] = str(0)
                    
             
             if (self.lN2.var == "x"):
                 # jX[0] = str(0)
                 if (self.lN1.var == self.lN2.var):
-                    posi[0] = random_sizes[self.lN1.i][0]
+                    posi[0] = c.random_sizes[self.lN1.i][0]
                 else:
-                    posi[0] = random_sizes[self.lN1.i][0]/2
+                    posi[0] = c.random_sizes[self.lN1.i][0]/2
             if (self.lN2.var == "y"):
                 # jX[1] = str(0)
                 if (self.lN1.var == self.lN2.var):
-                    posi[1] = random_sizes[self.lN1.i][1]
+                    posi[1] = c.random_sizes[self.lN1.i][1]
                 else:
-                    posi[1] = random_sizes[self.lN1.i][1]/2
+                    posi[1] = c.random_sizes[self.lN1.i][1]/2
             if (self.lN2.var == "z"):
                 # jX[2] = str(0)
                 if (self.lN1.var == self.lN2.var):
-                    posi[2] = random_sizes[self.lN1.i][2]
+                    posi[2] = c.random_sizes[self.lN1.i][2]
                 else:
-                    posi[2] = random_sizes[self.lN1.i][2]/2
+                    posi[2] = c.random_sizes[self.lN1.i][2]/2
 
             #SENDING IN THE JOINTS DEPENDING ON WHERE THE CHANGES ARE
             jX_str = " ".join(jX)
@@ -209,6 +263,22 @@ def Build_Creature():
             break
         starting_link = random.choice(terminal_edges)
         terminal_edges.remove(starting_link)
+
+def test_first_connect():
+    link = LINK("x", 0)
+    link2 = LINK("y", 0)
+    link3 = LINK("z", 0)
+    link4 = LINK("x", 0)
+
+    joint1 = JOINT(link, link2)
+    c.bodylen = 2
+    # joint2 = JOINT(link, link2)
+    joint3 = JOINT(link, link3)
+    joint4 = JOINT(link, link4)
+
+    joint1.Connect_Links()
+    joint3.Connect_Links()
+    # joint4.Connect_Links()
 
     # joint4.Connect_Links()
 # def Build_Creature():
