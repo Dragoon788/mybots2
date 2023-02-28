@@ -58,3 +58,4 @@ class SIMULATION:
 		p.disconnect()
 	def Get_Fitness(self):
 		self.robot.Get_Fitness()
+		# print("THRUUREWIOHAFPOSIHFOSDJFAN AISJFPASIOJDFASPIDJA ISOFJ PASIOFJ IA")

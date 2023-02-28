@@ -3,7 +3,7 @@
 import numpy
 import random
 
-t = 4000
+t = 1000
 
 backLeg_Amp =  1
 backLeg_Freq = 20
@@ -27,32 +27,8 @@ def MotorCommand(amplitude, frequency, offset, t):
 	return (numpy.sin(targetAngles))*amplitude
 
 maxForce = 100
-numberOfGenerations = 1
-populationSize = 1
-motorJointRange = 0
-gindex = 0
-bodylen = random.randint(1,7)
-curr_bodylen = 0
-random_sensor_locs = [random.randint(0,bodylen-1) for i in range(random.randint(1,bodylen))]
+numberOfGenerations = 150
+populationSize = 25
+motorJointRange = 1
 
-linkNames = []
-link_positions = []
-
-jointNames =[]
-
-
-numSensorNeurons = len(random_sensor_locs)
-numMotorNeurons = bodylen
-random_sizes = [[random.random() for i in range(0,3)] for i in range (0,bodylen+1)]
-
-# random_sizes_x = [[random.random() for i in range(0,10)] for i in range(bodylen)]
-# random_sizes_y = [[random.random() for i in range(0,10)] for i in range(bodylen)]
-# random_sizes_z = [[random.random() for i in range(0,10)] for i in range(bodylen)]
-
-# max_height_x = max(l[2] for l in random_sizes_x)
-# max_height_y = max(l[2] for l in random_sizes_y)
-# max_height_z = max(l[2] for l in random_sizes_z)
-
-max_height = max(l[2] for l in random_sizes)
-abs_pos = [0,0, max_height]
-prev_pos = abs_pos
+SolutionID = 0

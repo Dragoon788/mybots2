@@ -56,21 +56,21 @@ class ROBOT:
 		basePosition = basePositionAndOrientation[0]
 		xPosition = basePosition[0]
 
-		baseOrientation = basePositionAndOrientation[1]
-		baseEuler = p.getEulerFromQuaternion(baseOrientation)
+		# baseOrientation = basePositionAndOrientation[1]
+		# baseEuler = p.getEulerFromQuaternion(baseOrientation)
 
-		xOrientation = baseEuler[0]
-		yOrientation = baseEuler[1]
-		zOrientation = baseEuler[2]
+		# xOrientation = baseEuler[0]
+		# yOrientation = baseEuler[1]
+		# zOrientation = baseEuler[2]
 
 #		orientation = xOrientation + yOrientation + zOrientation
 
 #		print("THIS IS MY XPOSITION:" + str(xPosition))
 		f = open("data/tmp" + str(self.solutionID) + ".txt", "w")
 		f.write(str(xPosition) + "\n")
-		f.write(str(abs(xOrientation)) +"\n")
-		f.write(str(abs(yOrientation)) + "\n")
-		f.write(str(abs(zOrientation)) + "\n")
+		# f.write(str(abs(xOrientation)) +"\n")
+		# f.write(str(abs(yOrientation)) + "\n")
+		# f.write(str(abs(zOrientation)) + "\n")
 
 #		f2 = open("data/tmp2" + str(self.solutionID)+ ".txt", "w")
 #		f2.write(str(xOrientation))
@@ -79,6 +79,7 @@ class ROBOT:
 #		f2.close()
 
 #		os.system("ls data")
-		os.system("mv " + " data/tmp" + str(self.solutionID) + ".txt data/fitness" + self.solutionID + ".txt")
+		os.system("mv " + " data/tmp" + str(self.solutionID) + ".txt data/fitness" + str(self.solutionID) + ".txt")
+		# print (".txt data/fitness" + str(self.solutionID) + ".txt")
 #		os.system("mv " + " data/tmp2" + str(self.solutionID) + ".txt data/fitness2-" + self.solutionID + ".txt")
-#		os.system("ls data")
+		# os.system("ls data")

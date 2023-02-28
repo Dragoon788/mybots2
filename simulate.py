@@ -6,7 +6,7 @@ import sys
 directOrGUI = sys.argv[1]
 solutionID = sys.argv[2]
 simulation = SIMULATION(directOrGUI, solutionID)
-
+# print("THRUUREWIOHAFPOSIHFOSDJFAN AISJFPASIOJDFASPIDJA ISOFJ PASIOFJ IA")
 simulation.Run()
 
 #print(1)
@@ -16,4 +16,5 @@ simulation.Run()
 #print(5)
 #
 simulation.Get_Fitness()
+
 

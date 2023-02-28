@@ -9,11 +9,29 @@ import links as l
 
 class SOLUTION:
 	def __init__(self, nextAvailableID):
-		self.weights = 2*numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons) - 1
+		# random.seed(nextAvailableID)
+
+		self.gindex = 0
+		self.bodylen = random.randint(1,7)
+		self.curr_bodylen = 0
+		self.random_sensor_locs = [random.randint(0,self.bodylen-1) for i in range(random.randint(1,self.bodylen))]
+		self.linkNames = []
+		self.links = []
+		self.jointNames =[]
+		self.joints = []
+		self.numSensorNeurons = len(self.random_sensor_locs)
+		self.numMotorNeurons = self.bodylen
+		self.random_sizes = [[random.random() for i in range(0,3)] for i in range (0,self.bodylen+1)]
+		self.max_height = max(l[2] for l in self.random_sizes)
+		self.abs_pos = [0,0, self.max_height]
+		self.prev_pos = self.abs_pos
+
+		self.weights = 2*numpy.random.rand(self.numSensorNeurons,self.numMotorNeurons) - 1
 		self.myID = nextAvailableID
 
 	def Evaluate(self, directOrGUI):
 		self.Start_Simulation(directOrGUI)
+
 
 	def Create_World(self):
 		length = 1
@@ -28,58 +46,105 @@ class SOLUTION:
 
 		# print(c.random_sensor_locs)
 
-
+	
 		pyrosim.Start_URDF("body.urdf")
 		#Having the robot grow in it's own direction
-		# l.Create_Snakey()
-		l.Build_Creature()
-		# l.Create_Lizardy
-		# l.test_first_connect()
-		print(c.random_sensor_locs)
-		print(c.linkNames)
-		print(c.jointNames)
+		# l.Create_Snakey(self)
+		# print(self.links)
+		l.Build_Creature(self)
+		# l.Create_Lizardy(self)
+		# l.test_first_connect(self)
+		# while not (len(self.joints) == self.bodylen-1):
+		# 	time.sleep(0.01)
+		# print(self.random_sensor_locs)
+		# print(self.linkNames)
+		# print(self.jointNames)
+		# print("SOLUTOIN ID: " + str(self.myID))
+		
 
 				
 		pyrosim.End()
+
+	def Create_Body_Existing(self):
+
+		# print(c.random_sensor_locs)
+
+
+		pyrosim.Start_URDF("body.urdf")
+		#Having the robot grow in it's own direction
+		# l.Create_Snakey(self)
+		print(self.links)
+		l.Build_Existing_Creature(self)
+		# l.Create_Lizardy(self)
+		# l.test_first_connect(self)
+		print(self.random_sensor_locs)
+		print(self.linkNames)
+		print(self.jointNames)
+		
+		pyrosim.End()		
 
 	def Create_Brain(self):
 		pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
 		n = 0
 
-		for i in range(c.bodylen):
-			if (c.bodylen == 0):
+		for i in range(self.bodylen):
+			if (self.bodylen == 0):
 				break
-			if (i in c.random_sensor_locs):
-				pyrosim.Send_Sensor_Neuron(name = n, linkName = c.linkNames[i])
+			if (i in self.random_sensor_locs):
+				pyrosim.Send_Sensor_Neuron(name = n, linkName = self.linkNames[i])
 				n = n+1
 	
 
-		c.numSensorNeurons = n
-		for i in c.jointNames:
+		self.numSensorNeurons = n
+		for i in self.jointNames:
 			pyrosim.Send_Motor_Neuron(name = n, jointName = i)
 			n= n+1
-		print(f"this is my n: {n}")
-		print(c.numSensorNeurons)
-		print(c.numMotorNeurons)
-		for currentRow in range (0,c.numSensorNeurons):
-			for currentColumn in range (0,c.numMotorNeurons):
-				pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn+c.numSensorNeurons, weight = self.weights[currentRow][currentColumn])
+		# print(f"this is my n: {n}")
+		# print(self.numSensorNeurons)
+		# print(self.numMotorNeurons)
+		for currentRow in range (0,self.numSensorNeurons):
+			for currentColumn in range (0,self.numMotorNeurons):
+				pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn+self.numSensorNeurons, weight = self.weights[currentRow][currentColumn])
 		pyrosim.End()
 
 	def Mutate(self):
 #		print(self.weights)
-		self.weights[random.randint(0,c.numSensorNeurons-1)][random.randint(0,c.numMotorNeurons-1)] = random.uniform(-1,1)
+		self.weights[random.randint(0,self.numSensorNeurons-1)][random.randint(0,self.numMotorNeurons-1)] = random.uniform(-1,1)
 #		print(self.weights)
+		self.gindex = 0
+		self.curr_bodylen = 0
+		# self.random_sensor_locs = [random.randint(0,self.bodylen-1) for i in range(random.randint(1,self.bodylen))]
+		self.linkNames = []
+		self.links = []
+		self.jointNames =[]
+		self.joints = []
+		# self.numSensorNeurons = len(self.random_sensor_locs)
+
+
+		
+
+
+
 	def Start_Simulation(self, directOrGUI):
 		self.Create_World()
+		# print("CREATING WORLD IS FINISHED")
 		self.Create_Body()
+		# print("CREATING BODY IS FINISHED")
 		self.Create_Brain()
-		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
+		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID))
+
 #		os.system("ls data")
 
-	def Wait_For_Simulation_To_End(self):
+	def Start_Simulation_Best(self, directOrGUI):
+		self.Create_World()
+		self.Create_Body_Existing()
+		self.Create_Brain()
+		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID))
 
+	def Wait_For_Simulation_To_End(self):
+		
 		fitnessFileName = "data/fitness" + str(self.myID) + ".txt"
+		# print(fitnessFileName)
 #		fitnessFileName2 = "data/fitness2-" + str(self.myID) + ".txt"
 		while not (os.path.exists(fitnessFileName)):
 			time.sleep(0.01)
@@ -87,9 +152,9 @@ class SOLUTION:
 		lines = f.readlines()
 
 		self.movement_fitness = float(lines[0])
-		self.xOrientation_fitness = float(lines[1])
-		self.yOrientation_fitness = float(lines[2])
-		self.zOrientation_fitness = float(lines[3])
+		# self.xOrientation_fitness = float(lines[1])
+		# self.yOrientation_fitness = float(lines[2])
+		# self.zOrientation_fitness = float(lines[3])
 		f.close()
 #		print(self.fitn)
 #		f2.close()
@@ -99,6 +164,12 @@ class SOLUTION:
 		os.system("rm " + fitnessFileName)
 #		os.system("rm " + fitnessFileName2)
 #		os.system("ls data")
+		# print("REMOVAL OF is complete")
 
 	def Set_ID(self, ID):
 		self.myID = ID
+
+	def Connect_Joints(self, loj):
+		for joint in loj:
+			joint.Connect_Links()
+        
