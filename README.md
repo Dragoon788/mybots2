@@ -42,6 +42,9 @@ For the final project, I ran a population of 10 robots over 500 generations for 
 
 The plot shows the evolution of 10 robots who evolve over 500 generationsThe robot tries a series of body shape and orientations that lead to the best morphology that succeeds at moving along the x-axis. More often than not, I found that the less complex the structure (the smaller the number of links), the better the robots performed. When they were more complicated, the weight of the body plus the chance there would be not enough sensors was greater. As a result, the less complex bodies tended to do better.
 
+All the Graphs can be located here on imgur, representing the all 10 random seeds of population size 10:
+https://imgur.com/a/3e4r3mY
+
 ## Running the Code
 You can also run your own simulation to evolve a robot that moves in the x-axis by navigating to the click.py file within the code, and run that file. 
 
