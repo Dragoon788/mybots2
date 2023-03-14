@@ -17,11 +17,12 @@ class PARALLEL_HILL_CLIMBER:
 		# for item in path2:
 		# 	if item.startswith("fitness"):
 		# 		os.system("rm fitness*.txt")
-		os.system("rm brain*.nndf")
-		os.system("rm fitness.npy")
+		os.system("rm data/brain*.nndf")
+		os.system("rm data/fitness*.txt")
 		self.parents = {}
 		self.nextAvailableID = 0
 		self.graphv = {}
+		self.Best_Parents = None
 
 		for i in range(0,c.populationSize):
 			self.parents[i] = SOLUTION(self.nextAvailableID)
@@ -47,8 +48,7 @@ class PARALLEL_HILL_CLIMBER:
 			print("GENERATION #" + str(i))
 			self.Evolve_For_One_Generation()
 			i= i +1
-
-		self.Show_Best(self.parents)
+		self.Best_Parents = self.parents
 		# Best_Parent.Start_Simulation_Best("GUI")
 		# Best_Parent.Wait_For_Simulation_To_End()
 
@@ -77,6 +77,7 @@ class PARALLEL_HILL_CLIMBER:
 	def Evaluate(self, solutions, method):
 		for parent in solutions.values():
 			parent.Start_Simulation(method)
+
 		for parent in solutions.values():
 			parent.Wait_For_Simulation_To_End()
 

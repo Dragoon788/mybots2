@@ -23,8 +23,7 @@ class SOLUTION:
 		self.numMotorNeurons = self.bodylen
 		self.random_sizes = [[random.random() for i in range(0,3)] for i in range (0,self.bodylen+1)]
 		self.max_height = max(l[2] for l in self.random_sizes)
-		self.abs_pos = [0,0, self.max_height]
-		self.prev_pos = self.abs_pos
+		self.link_positions = []
 
 		self.weights = 2*numpy.random.rand(self.numSensorNeurons,self.numMotorNeurons) - 1
 		self.myID = nextAvailableID
@@ -47,8 +46,8 @@ class SOLUTION:
 		# print(c.random_sensor_locs)
 
 	
-		pyrosim.Start_URDF("body.urdf")
-		#Having the robot grow in it's own direction
+		pyrosim.Start_URDF("body" + str(self.myID) + ".urdf")
+		#Having the robot grow in it's own direcion
 		# l.Create_Snakey(self)
 		# print(self.links)
 		l.Build_Creature(self)
@@ -70,7 +69,7 @@ class SOLUTION:
 		# print(c.random_sensor_locs)
 
 
-		pyrosim.Start_URDF("body.urdf")
+		pyrosim.Start_URDF("body" + str(self.myID) + ".urdf")
 		#Having the robot grow in it's own direction
 		# l.Create_Snakey(self)
 		print(self.links)
@@ -131,7 +130,8 @@ class SOLUTION:
 		self.Create_Body()
 		# print("CREATING BODY IS FINISHED")
 		self.Create_Brain()
-		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID))
+#		print("id getting simulated", self.myID)
+		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
 
 #		os.system("ls data")
 
@@ -142,7 +142,7 @@ class SOLUTION:
 		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID))
 
 	def Wait_For_Simulation_To_End(self):
-		
+#		print("i was here")
 		fitnessFileName = "data/fitness" + str(self.myID) + ".txt"
 		# print(fitnessFileName)
 #		fitnessFileName2 = "data/fitness2-" + str(self.myID) + ".txt"

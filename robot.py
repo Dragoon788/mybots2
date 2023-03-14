@@ -15,7 +15,7 @@ from pyrosim.neuralNetwork import NEURAL_NETWORK
 class ROBOT:
 	def __init__(self, solutionID):
 		self.solutionID = solutionID
-		self.robotId = p.loadURDF("body.urdf")
+		self.robotId = p.loadURDF("body" + solutionID + ".urdf")
 		self.nn = NEURAL_NETWORK("brain" + solutionID + ".nndf")
 
 		pyrosim.Prepare_To_Simulate(self.robotId)
@@ -23,6 +23,8 @@ class ROBOT:
 		self.Prepare_To_Act()
 
 		os.system("rm brain" + solutionID + ".nndf")
+		os.system("rm body" + solutionID + ".urdf")
+
 
 
 	def Prepare_To_Sense(self):
@@ -52,6 +54,8 @@ class ROBOT:
 		self.nn.Update()
 #		self.nn.Print()
 	def Get_Fitness(self):
+
+		print("called fitness")
 		basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
 		basePosition = basePositionAndOrientation[0]
 		xPosition = basePosition[0]
