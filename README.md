@@ -38,7 +38,8 @@ What we're left with is an evolved creature that is designed for the task we des
 ## Final Results from Research
 For the final project, I ran a population of 10 robots over 500 generations for 10 random seeds. As a result, I ended with 50,000 simulations. More often than not the starting robot varied greatly from the starting robot and was hardly recognizable.
 
-![Add a subheading](https://user-images.githubusercontent.com/109482739/225151579-2eb20253-b1db-47ce-a7fb-cabc25346f4e.png)
+![Robot  9](https://user-images.githubusercontent.com/109482739/225157878-256d26e0-b355-409c-807e-6e847bdc851b.png)
+
 
 The plot shows the evolution of 10 robots who evolve over 500 generationsThe robot tries a series of body shape and orientations that lead to the best morphology that succeeds at moving along the x-axis. More often than not, I found that the less complex the structure (the smaller the number of links), the better the robots performed. When they were more complicated, the weight of the body plus the chance there would be not enough sensors was greater. As a result, the less complex bodies tended to do better.
 
@@ -48,8 +49,7 @@ All the Graphs can be located here on imgur, representing the all 10 random seed
 ## Running the Code
 You can also run your own simulation to evolve a robot that moves in the x-axis by navigating to the click.py file within the code, and run that file. 
 
-![Robot  9](https://user-images.githubusercontent.com/109482739/225157678-f3254afd-2081-4b93-b0b5-945849b3e92b.png)
-
+<img width="771" alt="Screen Shot 2023-03-14 at 4 00 57 PM" src="https://user-images.githubusercontent.com/109482739/225135296-b0da983b-950f-4ca9-a62c-439e728470b9.png">
 
 **Currently the code is optimized for running 500 generations with a population size of 10 (ran 10 times to reach a total of 50,000 simulations)
 You can change these numbers within constants.py.**
