@@ -48,7 +48,8 @@ All the Graphs can be located here on imgur, representing the all 10 random seed
 ## Running the Code
 You can also run your own simulation to evolve a robot that moves in the x-axis by navigating to the click.py file within the code, and run that file. 
 
-<img width="771" alt="Screen Shot 2023-03-14 at 4 00 57 PM" src="https://user-images.githubusercontent.com/109482739/225135296-b0da983b-950f-4ca9-a62c-439e728470b9.png">
+![Robot  9](https://user-images.githubusercontent.com/109482739/225157678-f3254afd-2081-4b93-b0b5-945849b3e92b.png)
+
 
 **Currently the code is optimized for running 500 generations with a population size of 10 (ran 10 times to reach a total of 50,000 simulations)
 You can change these numbers within constants.py.**
