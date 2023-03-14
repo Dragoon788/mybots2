@@ -1,3 +1,7 @@
+## Video Submission Links:
+Teaser Gif: ![Untitled video - Made with Clipchamp](https://user-images.githubusercontent.com/109482739/225162294-50ecf76b-8662-4db3-a52b-ced579e7aa8b.gif)
+Video: 
+
 ## Opening Remarks
 This project focuses on creating a randomly shaped, and generated robot that grows in 3D space and evolves for movement along the x-direction. Much of the code utililzed was built off the work of the **Ludobots Subreddit**. The Subreddit served as inspiration for concepts and implemenation, as I furthered my understanding by using concepts from the learning guide.
 
