@@ -4,25 +4,48 @@ This project focuses on creating a randomly shaped, and generated robot that gro
 Here is the Ludobots Subreddit: https://www.reddit.com/r/ludobots/
 
 ## Creation of Robots
-The Construction of the robots depends mostly on the implementation of Link and Joint Classes within links.py, while solution.py stored information for individual robots (#of joints, # of sensors, etc.). Solution.py is also responsible for ultimately putting otgether the robot using the Link and Joint Classes.
-
-Robots can grow in 3D because of my invariant that robots only grow in the positive x,y,z directions. Build_Creature in links.py, highlights how this works where a list keeps of which directions have been added to already to make sure two links aren't placed inside one another. Choosing a random direction, the links can choose any terminal edge from our links to build off of.
+The Construction of the robots depends mostly on the implementation of Link and Joint Classes within links.py, while solution.py stored information for individual robots (#of joints, # of sensors, etc.). Solution.py is also responsible for ultimately putting otgether the robot using the Link and Joint Classes:
 
 ![vBev0gt - Imgur](https://user-images.githubusercontent.com/109482739/225128071-700f0834-ac9b-423f-99e2-e808e7d7e39d.jpg)
 
-The connection of the joints was the difficult part of the this assignment. Based on what
-the direction of the first link and the second link, we would have to mathmatically determine
-where the joint should be placed.
+Robots can grow in 3D because of my invariant that robots only grow in the positive x,y,z directions. Build_Creature in links.py, highlights how this works where a list keeps of which directions have been added to already to make sure two links aren't placed inside one another. Choosing a random direction, the links can choose any terminal edge from our links to build off of:
 
-The diagram here explains that process:
+![Brain Construction - AL 396 - Imgur](https://user-images.githubusercontent.com/109482739/225128756-ba112af9-8fba-485a-be74-754a20fdec25.jpg)
 
+Depending on which side we are appending the next link, we would need to move the change the Joint and it's axis to match the side correctly. This involved correctly identifying the shape of the link being attached as well as its direction.
 
 The Brain was created simply by looping through all my stored joints in an array and 
 adding motors to each joint. For the sensors and synapses, I had a random list of x,y,z locations.
 If my block was in any of those indexes, it would turn green and a synapse would be added.
 
 ## Mutating Robots
+For the mutation of robots, parallelHillClimber.py and solution.py handled most of the load of mutating and keep track of all our mutated children. Mutating the robots - which occured at each spawning of the children - involves two main components: 
+
+  1. Changing the shape of the body and the size of the blocks
+  2. Changing the weights and location of sensors Neurons
+
+The mutation did not change body length and # of sensor neurons, but it focused on developing new body shapes that were efficient for movement and identifying how the location of sensor Neurons aid in movement. Mutation happens by copying the parent in solution.py and allowing some of the values to change and pick new random variables.
+
+![Brain Construction - AL 396 - Imgur](https://user-images.githubusercontent.com/109482739/225132356-e756ede3-2c6c-4ace-a5b3-a7ca68612566.png)
 
 ## Evolving Robots
+parallelHillClimber.py handles the evolution of parents and the selection for a certain fitness. This is done in the Evolve function where a child is made by copying the parent and then reseting and allowing certain values to change (new sizes of links, new sensor locs, etc.) Then if the chosen fitness is better for the child, those children would go on and evolve themselves. 
+
+![Blank diagram (2)](https://user-images.githubusercontent.com/109482739/225134306-24531955-c018-400d-aed2-3e40160004e6.png)
+
+What we're left with is an evolved creature that is designed for the task we desire.
 
 ## Running the Code
+To run the code, simply navigate to the click.py file within the code, and run that file. 
+
+<img width="771" alt="Screen Shot 2023-03-14 at 4 00 57 PM" src="https://user-images.githubusercontent.com/109482739/225135296-b0da983b-950f-4ca9-a62c-439e728470b9.png">
+
+**Currently the code is optimized for running 500 generations with a population size of 10 (ran 10 times to reach a total of 50,000 simulations)
+You can change these numbers within constants.py.**
+
+You can also run your own simulation to evolve a robot that moves in the x-axis, or you can run pre-existing robots that I found were the best robots from each of my random seeds. To run these, navigate to show_best.py and run the file with an input later for a number (0-9).
+
+<img width="763" alt="Screen Shot 2023-03-14 at 4 02 46 PM" src="https://user-images.githubusercontent.com/109482739/225135581-70398f64-bb17-4af3-bedf-4387974acd2b.png">
+<img width="653" alt="Screen Shot 2023-03-14 at 4 03 14 PM" src="https://user-images.githubusercontent.com/109482739/225135669-254ddbe3-f61d-4894-81c9-d9dc1c01aa3d.png">
+
+
