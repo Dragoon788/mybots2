@@ -36,14 +36,14 @@ parallelHillClimber.py handles the evolution of parents and the selection for a 
 What we're left with is an evolved creature that is designed for the task we desire.
 
 ## Running the Code
-To run the code, simply navigate to the click.py file within the code, and run that file. 
+You can also run your own simulation to evolve a robot that moves in the x-axis by navigating to the click.py file within the code, and run that file. 
 
 <img width="771" alt="Screen Shot 2023-03-14 at 4 00 57 PM" src="https://user-images.githubusercontent.com/109482739/225135296-b0da983b-950f-4ca9-a62c-439e728470b9.png">
 
 **Currently the code is optimized for running 500 generations with a population size of 10 (ran 10 times to reach a total of 50,000 simulations)
 You can change these numbers within constants.py.**
 
-You can also run your own simulation to evolve a robot that moves in the x-axis, or you can run pre-existing robots that I found were the best robots from each of my random seeds. To run these, navigate to show_best.py and run the file with an input later for a number (0-9).
+Rather than running your own simulation, or you can run pre-existing robots that I found were the best robots from each of my random seeds after 500 generations. To run these, navigate to show_best.py and run the file with an input later for a number (0-9).
 
 <img width="763" alt="Screen Shot 2023-03-14 at 4 02 46 PM" src="https://user-images.githubusercontent.com/109482739/225135581-70398f64-bb17-4af3-bedf-4387974acd2b.png">
 <img width="653" alt="Screen Shot 2023-03-14 at 4 03 14 PM" src="https://user-images.githubusercontent.com/109482739/225135669-254ddbe3-f61d-4894-81c9-d9dc1c01aa3d.png">
