@@ -35,6 +35,13 @@ parallelHillClimber.py handles the evolution of parents and the selection for a 
 
 What we're left with is an evolved creature that is designed for the task we desire.
 
+## Final Results from Research
+For the final project, I ran a population of 10 robots over 500 generations for 10 random seeds. As a result, I ended with 50,000 simulations. More often than not the starting robot varied greatly from the starting robot and was hardly recognizable.
+
+![Add a subheading](https://user-images.githubusercontent.com/109482739/225151579-2eb20253-b1db-47ce-a7fb-cabc25346f4e.png)
+
+The plot shows the evolution of 10 robots who evolve over 500 generationsThe robot tries a series of body shape and orientations that lead to the best morphology that succeeds at moving along the x-axis. More often than not, I found that the less complex the structure (the smaller the number of links), the better the robots performed. When they were more complicated, the weight of the body plus the chance there would be not enough sensors was greater. As a result, the less complex bodies tended to do better.
+
 ## Running the Code
 You can also run your own simulation to evolve a robot that moves in the x-axis by navigating to the click.py file within the code, and run that file. 
 
