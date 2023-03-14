@@ -2,6 +2,8 @@
 
 import os
 from parallelHillClimber import PARALLEL_HILL_CLIMBER
+import pickle
+import constants as c
 
 
 #for i in range (0,2):
@@ -11,5 +13,8 @@ from parallelHillClimber import PARALLEL_HILL_CLIMBER
 phc = PARALLEL_HILL_CLIMBER()
 phc.Evolve()
 
-input("Press Enter to Continue")
 phc.Show_Best(phc.Best_Parents)
+
+
+with open('phc' + str(9) + '.pickle', 'wb') as f:
+    pickle.dump(phc, f)

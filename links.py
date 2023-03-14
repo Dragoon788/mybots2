@@ -14,10 +14,9 @@ class LINK:
         self.var = variable
         self.i = solution.gindex
         self.tracker = {"x": 0, "y": 0, "z":0}
-        self.abs_pos = prev_pos
+        self.abs_pos = [prev_pos[0], prev_pos[1], prev_pos[2]]
         self.s = solution
         solution.gindex = solution.gindex + 1
-
 
         if (self.var == "x"):
             self.abs_pos[0] = self.abs_pos[0] + (self.s.random_sizes[self.i][0]/2)
@@ -35,7 +34,9 @@ class LINK:
         self.yMax = self.abs_pos[1] + self.s.random_sizes[self.i][1]
         self.zMin = self.abs_pos[2] - self.s.random_sizes[self.i][2]
         self.zMax = self.abs_pos[2] + self.s.random_sizes[self.i][2]   
-        solution.link_positions.append([self.xMin, self.xMax, self.yMin, self.yMax, self.zMin, self.zMax])         
+        
+        solution.link_positions.append(self.abs_pos)
+        solution.minsxmax.append([self.xMin, self.xMax, self.yMin, self.yMax, self.zMin, self.zMax])         
 
 
     def make_lN_str (self):
@@ -60,7 +61,7 @@ class LINK:
             if (self.var == "x"):
                 random_sizes = self.s.random_sizes
                 posi = [random_sizes[self.i][0]/2, 0, 0]
-                print(random_sizes[self.i])
+                # print(random_sizes[self.i])
             elif (self.var == "y"):
                 random_sizes = self.s.random_sizes
                 posi = [0, random_sizes[self.i][1]/2, 0]
@@ -115,7 +116,7 @@ class LINK:
 
     def check_for_int(self):
         def x_check():
-            for pos in self.s.link_positions:
+            for pos in self.s.minsxmax:
                 if (self.xMax > pos[0] and self.xMax < pos[1]):
                     xdif = self.xMax - pos[0]
                     # c.random_sizes[self.i][0] = c.random_sizes[self.i][0] - dif
@@ -127,7 +128,7 @@ class LINK:
                 else:
                     return [False, 0]
         def y_check():
-            for pos in self.s.link_positions:
+            for pos in self.s.minsxmax:
                 if (self.yMax > pos[2] and self.yMax < pos[3]):
                     ydif = self.yMax - pos[2]
                     # c.random_sizes[self.i][1] = c.random_sizes[self.i][1] - dif
@@ -139,7 +140,7 @@ class LINK:
                 else:
                     return [False, 0]
         def z_check():
-            for pos in self.s.link_positions:
+            for pos in self.s.minsxmax:
                 if (self.zMax > pos[4] and self.zMax < pos[5]):
                     zdif = self.zMax - pos[4]
                     # c.random_sizes[self.i][2] = c.random_sizes[self.i][2] - dif
@@ -151,10 +152,11 @@ class LINK:
                 else:
                     return [False, 0]
         if (x_check()[0] and y_check()[0] and z_check()[0]):
-            self.s.random_sizes[self.i][0] = 0.5 #self.s.random_sizes[self.i][0] - x_check()[1]
-            self.s.random_sizes[self.i][1] = 0.5 #self.s.random_sizes[self.i][1] - y_check()[1]
-            self.s.random_sizes[self.i][2] = 0.5 #self.s.random_sizes[self.i][2] - z_check()[1]
-            print ("IT OVERLAPS!", x_check()[1],y_check()[1],z_check()[1])
+            # self.s.random_sizes[self.i][0] = self.s.random_sizes[self.i][0] - x_check()[1]
+            # self.s.random_sizes[self.i][1] = self.s.random_sizes[self.i][1] - y_check()[1]
+            # self.s.random_sizes[self.i][2] = self.s.random_sizes[self.i][2] - z_check()[1]
+            # print ("IT OVERLAPS!", self.xMin, self.xMax, self.yMin, self.yMax, self.zMin, self.zMax)
+            pass
                 
 class JOINT:
     def __init__(self,link1, link2, solution):
@@ -316,33 +318,7 @@ class JOINT:
             # print(jX_str)
             pyrosim.Send_Joint(jN, lN, nextlN, type = "revolute", position = posi, jointAxis = jX_str)
 
-# def Create_Snakey(solution):
-#     dir = ["x","y","z"]
-#     LINKS = []
-#     for i in range(0, solution.bodylen-1):
-#         LINKS.append(LINK(random.choice(dir), solution))
-#     for i in range(len(LINKS)-1):
-#         link = LINKS[i]
-#         next_link = LINKS[i+1]			
-#         if (i == len(LINKS)-2):
-#             link.Send_Link()
-#         else:
-#             link.Send_Link()
-#             Joint = JOINT(link, next_link, solution)
-#             Joint.Send_Joint()
-#     # for link in LINKS:
-#     #     while (len(c.linkNames) < 4*c.bodylen):
-#     #         for i in range(link.i_after_str(c.linkNames[max_i]), 4*c.bodylen):
-#     #             next_link = l.LINK(random.choice(dir), i)
-#     #             print(i)
-#     #             if (i == 4*c.bodylen-2):
-#     #                 link.Send_Link()
-#     #                 max_i= i
-#     #             else:
-#     #                 link.Send_Link()
-#     #                 Joint = l.JOINT(link, next_link)
-#     #                 Joint.Send_Joint()
-#     # print(LINKS)
+
 def Build_Creature(solution):
     dir = ["x","y", "z"]
     terminal_edges = []
@@ -386,7 +362,7 @@ def Build_Creature(solution):
             starting_link = random.choice(terminal_edges)
             terminal_edges.remove(starting_link)
         # print(len(solution.links))
-    # print("BUILD CREATURE IS FINISHED")
+    # print(solution.link_positions)
 
 
 def Build_Existing_Creature(solution):
@@ -394,98 +370,5 @@ def Build_Existing_Creature(solution):
         joint.Send_Existing_Joint()
     for link in solution.links:
         link.Send_Existing_Link()
-# def Build_Creature():
-#     dir = ["x", "y", "z"]
-#     LINKS = []
-
-#     link = LINK("x", 0)
-#     link.Send_Link()
-#     # next_link = LINK("y", 1)
-#     # Joint = JOINT(link, next_link)
-
-#     LINKS.append(link)
-#     i = 1
-#     # LINKS.append(next_link)
-#     for link in LINKS:
-#         print(link)
-#         joint_count = 0
-#         # for i in range (1, c.bodylen-1):
-#     # for link in LINKS:
-#         # if (i == 0):
-#         #     link = LINKS[i]
-#         #     next_link = LINK(random.choice(dir), i)
-#         #     LINKS.append(next_link)
-#         # else:
-#         # link = LINKS[i]
-#         while(i < c.bodylen-1):
-#             next_links = [LINK("x", i), LINK("y", i), LINK("z", i)]
-#             if not (next_links[0] in LINKS):
-#                 LINKS.append(next_links[0])
-#                 joint = JOINT(link, next_links[0])
-#                 joint.Send_Joint()
-#                 next_links[0].Send_Link()
-#                 i = i+1
-#             if not (next_links[1] in LINKS):
-#                 LINKS.append(next_links[1])
-#                 joint = JOINT(link, next_links[1])
-#                 joint.Send_Joint()
-#                 next_links[1].Send_Link()
-#                 i = i+1     
-#             if not (next_links[2] in LINKS):
-#                 LINKS.append(next_links[2])
-#                 joint = JOINT(link, next_links[2])
-#                 joint.Send_Joint()
-#                 next_links[2].Send_Link()
-#                 i = i+1          
-
-        
-#     print(LINKS)
-    # link.Send_Link()
-    # Joint.Send_Joint()
-    # next_link.Send_Link()
-    
-            
-# def Create_Lizardy(solution):
-#     dir = ["x", "y", "z"]
-#     random_skel_dir = dir[random.randint(0,2)]
-#     LINKS =[]
-#     def build_in_one_dir (d, list):
-#         for i in range(0,10):
-#             list.append(l.LINK(d, solution))
-#         for i in range(len(list)-1):
-#             link = list[i]
-#             next_link = list[i+1]		
-#             if (i == len(list)-2):
-#                 link.Send_Link()
-#             else:
-#                 link.Send_Link()
-#                 Joint = l.JOINT(link, next_link, solution)
-#                 Joint.Send_Joint()
-    # build_in_one_dir(d, LINKS)
-    # for link in LINKS:
-    #     useless_list = []
-    #     print("THIS IS THE LENGHT O F RANODM:" + str(len(c.random_sizes_x)))
-    #     for i in range(0,10):
-    #         useless_list.append(l.LINK("x", c.gindex))
-    #         c.gindex = c.gindex+1
-    #     for i in range(len(useless_list)-1):
-    #         print(link)
-    #         link = useless_list[i]
-    #         useless_list[0] = link
-    #         next_link = useless_list[i+1]		
-    #         if (i == len(useless_list)-2):
-    #             link.Send_Link()
-    #         else:
-    #             print(link.i)
-    #             link.Send_Link()
-    #             Joint = l.JOINT(link, next_link)
-    #             Joint.Send_Joint()
-
-    # LEGS = [random.randint(0,10) for i in range (len(LINKS))]
-    # for i in LEGS:
-    #     BUILD_LEGS = []
-    #     BUILD_LEGS.append(LINKS[i])
-    #     build_in_one_dir("x", BUILD_LEGS)
-        
 
 

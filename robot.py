@@ -35,7 +35,7 @@ class ROBOT:
 	def Sense(self, t):
 		for i in self.sensors:
 			self.sensors[i].Get_Value(t)
-			self.sensors[i].Save_Values()
+			# self.sensors[i].Save_Values()
 	def Prepare_To_Act(self):
 		self.motors = {}
 		for jointName in pyrosim.jointNamesToIndices:
@@ -54,6 +54,7 @@ class ROBOT:
 		self.nn.Update()
 #		self.nn.Print()
 	def Get_Fitness(self):
+
 
 		print("called fitness")
 		basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)

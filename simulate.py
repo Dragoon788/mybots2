@@ -3,18 +3,13 @@
 from simulation import SIMULATION
 import sys
 
-directOrGUI = sys.argv[1]
-solutionID = sys.argv[2]
-simulation = SIMULATION(directOrGUI, solutionID)
-# print("THRUUREWIOHAFPOSIHFOSDJFAN AISJFPASIOJDFASPIDJA ISOFJ PASIOFJ IA")
-simulation.Run()
+# directOrGUI = sys.argv[1]
+# solutionID = sys.argv[2]
+simulation = SIMULATION(sys.argv[1], sys.argv[2])
 
-#print(1)
-#print(2)
-#print(3)
-#print(4)
-#print(5)
-#
+simulation.Run()
 simulation.Get_Fitness()
+
+
 
 

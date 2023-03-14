@@ -27,8 +27,9 @@ def MotorCommand(amplitude, frequency, offset, t):
 	return (numpy.sin(targetAngles))*amplitude
 
 maxForce = 100
-numberOfGenerations = 50
+numberOfGenerations = 500
 populationSize = 10
 motorJointRange = 1
 
 SolutionID = 0
+phcIndex = 0

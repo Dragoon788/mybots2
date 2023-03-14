@@ -22,6 +22,7 @@ class SIMULATION:
 		else:
 			return TypeError("Not either GUI or DIRECT")
 #		self.physicsClient = p.connect(p.DIRECT, options="--opengl2")
+		p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
 		p.setAdditionalSearchPath(pybullet_data.getDataPath())
 		p.setGravity(0,0,-9.8)
 		self.world = WORLD()
@@ -29,33 +30,19 @@ class SIMULATION:
 
 	def Run(self):
 		for i in range(0,c.t):
-			if (self.directOrGUI == "GUI"):
-				time.sleep(1/200)
 			p.stepSimulation()
 			self.robot.Sense(i)
 			self.robot.Think()
 			self.robot.Act()
+			if (self.directOrGUI == "GUI"):
+				time.sleep(1/200)
+			else:
+				pass
 
-#		       backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
-#		       frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
-#		#      print(frontLegSensorValues)
-#
-#		       pyrosim.Set_Motor_For_Joint(
-#		       bodyIndex = robotId,
-#		       jointName = b'Torso_BackLeg',
-#		       controlMode = p.POSITION_CONTROL,
-#		       targetPosition = backLegMotorCommand[i],
-#		       maxForce = 50)
-#
-#		       pyrosim.Set_Motor_For_Joint(
-#		       bodyIndex = robotId,
-#		       jointName = b'Torso_FrontLeg',
-#		       controlMode = p.POSITION_CONTROL,
-#		       targetPosition = frontLegMotorCommand[i],
-#		       maxForce = 50)
+
 #
 	def __del__(self):
 		p.disconnect()
 	def Get_Fitness(self):
 		self.robot.Get_Fitness()
-		# print("THRUUREWIOHAFPOSIHFOSDJFAN AISJFPASIOJDFASPIDJA ISOFJ PASIOFJ IA")
+

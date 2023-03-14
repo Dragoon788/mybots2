@@ -24,6 +24,7 @@ class SOLUTION:
 		self.random_sizes = [[random.random() for i in range(0,3)] for i in range (0,self.bodylen+1)]
 		self.max_height = max(l[2] for l in self.random_sizes)
 		self.link_positions = []
+		self.minsxmax = []
 
 		self.weights = 2*numpy.random.rand(self.numSensorNeurons,self.numMotorNeurons) - 1
 		self.myID = nextAvailableID
@@ -51,14 +52,7 @@ class SOLUTION:
 		# l.Create_Snakey(self)
 		# print(self.links)
 		l.Build_Creature(self)
-		# l.Create_Lizardy(self)
-		# l.test_first_connect(self)
-		# while not (len(self.joints) == self.bodylen-1):
-		# 	time.sleep(0.01)
-		# print(self.random_sensor_locs)
-		# print(self.linkNames)
-		# print(self.jointNames)
-		# print("SOLUTOIN ID: " + str(self.myID))
+
 		
 
 				
@@ -98,9 +92,7 @@ class SOLUTION:
 		for i in self.jointNames:
 			pyrosim.Send_Motor_Neuron(name = n, jointName = i)
 			n= n+1
-		# print(f"this is my n: {n}")
-		# print(self.numSensorNeurons)
-		# print(self.numMotorNeurons)
+
 		for currentRow in range (0,self.numSensorNeurons):
 			for currentColumn in range (0,self.numMotorNeurons):
 				pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn+self.numSensorNeurons, weight = self.weights[currentRow][currentColumn])
@@ -131,6 +123,7 @@ class SOLUTION:
 		# print("CREATING BODY IS FINISHED")
 		self.Create_Brain()
 #		print("id getting simulated", self.myID)
+		# print("im here")
 		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
 
 #		os.system("ls data")
@@ -142,29 +135,18 @@ class SOLUTION:
 		os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID))
 
 	def Wait_For_Simulation_To_End(self):
-#		print("i was here")
 		fitnessFileName = "data/fitness" + str(self.myID) + ".txt"
-		# print(fitnessFileName)
-#		fitnessFileName2 = "data/fitness2-" + str(self.myID) + ".txt"
+
 		while not (os.path.exists(fitnessFileName)):
 			time.sleep(0.01)
 		f = open(fitnessFileName, "r")
 		lines = f.readlines()
 
 		self.movement_fitness = float(lines[0])
-		# self.xOrientation_fitness = float(lines[1])
-		# self.yOrientation_fitness = float(lines[2])
-		# self.zOrientation_fitness = float(lines[3])
-		f.close()
-#		print(self.fitn)
-#		f2.close()
-#		print("THIS IS MY FITNESS FILE" + str(self.fitness))
 
-#		print("THIS IS MY SELF.ID:" + str(self.myID))
+		f.close()
+
 		os.system("rm " + fitnessFileName)
-#		os.system("rm " + fitnessFileName2)
-#		os.system("ls data")
-		# print("REMOVAL OF is complete")
 
 	def Set_ID(self, ID):
 		self.myID = ID
