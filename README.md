@@ -1,3 +1,7 @@
+## Ludobots
+Much of the code utililzed was built off the work of the Ludobots Subreddit. Ludobots served as inspiration for concepts and implemenation, and I furthered my understanding by using concepts from the learning guide.
+
+## House
 For this assignment, I designed a creature that randomly grew in 3D space by creating a function 
 within links.py which would create a list of Links that were built off the of the previous link.
 A random direction would be chosen in the link's constructor and therefore be built in a random direction.
