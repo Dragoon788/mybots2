@@ -10,7 +10,6 @@ Robots can grow in 3D because of my invariant that robots only grow in the posit
 
 ![vBev0gt - Imgur](https://user-images.githubusercontent.com/109482739/225128071-700f0834-ac9b-423f-99e2-e808e7d7e39d.jpg)
 
-
 The connection of the joints was the difficult part of the this assignment. Based on what
 the direction of the first link and the second link, we would have to mathmatically determine
 where the joint should be placed.
