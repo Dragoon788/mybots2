@@ -8,7 +8,8 @@ The Construction of the robots depends mostly on the implementation of Link and 
 
 Robots can grow in 3D because of my invariant that robots only grow in the positive x,y,z directions. Build_Creature in links.py, highlights how this works where a list keeps of which directions have been added to already to make sure two links aren't placed inside one another. Choosing a random direction, the links can choose any terminal edge from our links to build off of.
 
-https://imgur.com/vBev0gt
+![vBev0gt - Imgur](https://user-images.githubusercontent.com/109482739/225128071-700f0834-ac9b-423f-99e2-e808e7d7e39d.jpg)
+
 
 The connection of the joints was the difficult part of the this assignment. Based on what
 the direction of the first link and the second link, we would have to mathmatically determine
