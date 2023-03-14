@@ -1,5 +1,5 @@
 ## Video Submission Links:
-Teaser Gif: ![Untitled video - Made with Clipchamp](https://user-images.githubusercontent.com/109482739/225162294-50ecf76b-8662-4db3-a52b-ced579e7aa8b.gif)
+![Untitled video - Made with Clipchamp](https://user-images.githubusercontent.com/109482739/225162294-50ecf76b-8662-4db3-a52b-ced579e7aa8b.gif)
 
 
 ## Opening Remarks
