@@ -29,6 +29,8 @@ For the mutation of robots, parallelHillClimber.py and solution.py handled most 
   1. Changing the shape of the body and the size of the blocks
   2. Changing the weights and location of sensors Neurons
 
+![Blank diagram (3)](https://user-images.githubusercontent.com/109482739/225190726-6c2d59ad-ea29-4148-8587-0df629e140dc.png)
+
 The mutation did not change body length and # of sensor neurons, but it focused on developing new body shapes that were efficient for movement and identifying how the location of sensor Neurons aid in movement. Mutation happens by copying the parent in solution.py and allowing some of the values to change and pick new random variables.
 
 ![Brain Construction - AL 396 - Imgur](https://user-images.githubusercontent.com/109482739/225132356-e756ede3-2c6c-4ace-a5b3-a7ca68612566.png)
@@ -50,6 +52,10 @@ The plot shows the evolution of 10 robots who evolve over 500 generationsThe rob
 
 All the Graphs can be located here on imgur, representing the all 10 random seeds of population size 10:
 [https://imgur.com/a/qT2MTYu](https://imgur.com/a/qT2MTYu)
+
+I also analyzed the failures of the best robot ancestors by saving the data of some parallelHillClimbers that we've seen across my graphs. I concluded that when the shapes became more complex and jumbled (despite still having the same number of links), they tended to have trouble moving. As concluded above, this information from my program tells me a greater number of less complex structures moved better. 
+
+Evolution got stuck whenever the robots had found the best solution early on. This resulted in a plateauing you can see in certain graphs provided. 
 
 ## Running the Code
 You can also run your own simulation to evolve a robot that moves in the x-axis by navigating to the click.py file within the code, and run that file. 
